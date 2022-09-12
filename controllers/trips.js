@@ -1,13 +1,19 @@
 const express = require("express");
-const userRouter = express.Router();
+const Review = require("../models/review.js");
+const tripRouter = express.Router();
 const User = require("../models/user.js");
 const bcrypt = require("bcrypt");
 
 //ROUTES
 //I
+tripRouter.get("/", (req, res) => {
+    res.render("./dashboard.ejs", { 
+        currentUser: req.session.currentUser
+    });
+});
 
 //N
-userRouter.get("/new", (req, res) => {
+tripRouter.get("/new", (req, res) => {
     res.render("./user/new.ejs");
 });
 
@@ -16,7 +22,7 @@ userRouter.get("/new", (req, res) => {
 //U
 
 //C
-userRouter.post("/", (req, res) => {
+tripRouter.post("/", (req, res) => {
     //Check for an existing username or email 
     User.findOne({
         username: req.body.username
@@ -41,4 +47,4 @@ userRouter.post("/", (req, res) => {
 
 
 
-module.exports = userRouter;
+module.exports = tripRouter;

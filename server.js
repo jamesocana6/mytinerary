@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const sessionController = require("./controllers/sessions.js")
 const userController = require("./controllers/users.js");
+const tripController = require("./controllers/trips.js");
 
 //Connect MongoDB
 mongoose.connect(process.env.DATABASE_URL);
@@ -21,6 +22,8 @@ app.use(session({
 }));
 app.use("/user", userController);
 app.use("/member", sessionController);
+app.use(`/trip`, tripController);
+
 
 //ROUTE
 app.get("/", (req, res) => {
