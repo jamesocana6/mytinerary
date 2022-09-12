@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyTinerary</title>
+</head>
+<body>
+    <%- include("../partials/nav.ejs")%>
+    <h1>Edit Trip</h1>
+    <form action="/trips" method="POST">
+        Name: <input type="text" name="name"><br>
+        Country: <input type="text" name="country"><br>
+        Date: <input type="date" name="date"><br>
+        Length of Trip (in Days): <input type="number" name="lengthOfTrip"><br>
+        Number of People: <input type="number" name="numberOfPeople"><br>
+        Total Cost: <input type="number" name="totalCost"><br>
+        Places Visited: <input type="text" name="placesVisited"><br>
+        Trip Completed? <input type="checkbox" name="isComplete"><br>
+        <input type="submit" value="Edit Trip">
+    </form>
+</body>
+</html>

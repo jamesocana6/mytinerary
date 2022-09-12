@@ -53,6 +53,20 @@ tripRouter.post("/", (req, res) => {
 });
 
 //E
+tripRouter.get("/:id/edit", (req, res) => {
+    if (req.session.currentUser) {
+        User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
+            //get the trip with the correct id
+            let trip = foundUser.trips.find(trip => trip._id == req.params.id);
+            res.render("./trips/edit.ejs", {
+                currentUser: req.session.currentUser,
+                trip,
+            });
+        });
+    } else {
+        res.redirect("/");
+    }
+});
 
 //S
 tripRouter.get("/:id", (req, res) => {

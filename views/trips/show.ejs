@@ -6,6 +6,7 @@
 </head>
 <body>
     <%- include("../partials/nav.ejs")%>
+    <a href="/trips/<%=trip._id%>/edit"><button>Edit Trip</button></a>
     <h1><%= trip.name %></h1>
     <h2><%= trip.date%></h2>
     <h2><%= trip.country%></h2>
