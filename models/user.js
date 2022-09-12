@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const tripSchema = mongoose.Schema({
     name: String,
-    country: [{type: mongoose.Schema.Types.ObjectId, ref: "Country"}],
+    country: String,
+    countryId: [{type: mongoose.Schema.Types.ObjectId, ref: "Country"}],
     date: Date,
     lengthOfTrip: Number,
     numberOfPeople: Number,

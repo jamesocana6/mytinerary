@@ -8,8 +8,10 @@ const bcrypt = require("bcrypt");
 //I
 tripRouter.get("/", (req, res) => {
     if (req.session.currentUser) {
-        res.render("./dashboard.ejs", { 
-            currentUser: req.session.currentUser
+        User.findById(req.session.currentUser._id, (err, foundUser) => {
+            res.render("./dashboard.ejs", { 
+                currentUser: foundUser
+            });
         });
     } else {
         res.redirect("/");
@@ -39,7 +41,13 @@ tripRouter.post("/", (req, res) => {
         res.send("no users login")
     } else {
         User.findById(req.session.currentUser._id, (err, foundUser) => {
-           res.send(foundUser);
+            foundUser.trips.push(req.body);
+            foundUser.save(err => {
+                console.log(req.session.currentUser.trips)
+                console.log(foundUser.trips)
+                res.redirect("/trips");
+            });
+            // res.send(foundUser.trips);
         });
     }
 });
@@ -49,6 +57,10 @@ tripRouter.post("/", (req, res) => {
 //S
 
 
-
+function createTrip (req, res) {
+    User.findById(req.session.currentUser._id, (err, foundUser) => {
+        foundUser.trips.push(req.body);
+    })
+}
 
 module.exports = tripRouter;

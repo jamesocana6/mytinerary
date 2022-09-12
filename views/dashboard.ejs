@@ -6,7 +6,14 @@
 </head>
 <body>
     <%- include("./partials/nav.ejs")%>
-    <h1><%=currentUser.username%>'s Trips</h1>
-    <a href="/trips/new">Add a Trip</a>
+    <h1><%= currentUser.username %>'s Trips</h1>
+    <ul>
+        <% for (let trip of currentUser.trips) { %>
+            <li>
+                <%= trip.name %> <br>
+            </li>
+        <% } %>
+    </ul>
+    <a href="/trips/new">Add New Trip</a>
 </body>
 </html>
