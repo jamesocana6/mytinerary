@@ -12,7 +12,6 @@ const tripSchema = mongoose.Schema({
 });
 
 const userSchema = mongoose.Schema({
-    email: { type: String, unique: true },
     username: { type: String, unique: true, required: true },
     password: { type: String, unique: true, required: true },
     trips: [tripSchema],

@@ -20,7 +20,20 @@ app.use(session({
     saveUninitialized: false,
 }));
 app.use("/user", userController);
-app.use("/sessions", sessionController);
+app.use("/member", sessionController);
+
+//ROUTE
+app.get("/", (req, res) => {
+	if (req.session.currentUser) {
+		res.render('dashboard.ejs', {
+			currentUser: req.session.currentUser
+		});
+	} else {
+		res.render('index.ejs', {
+			currentUser: req.session.currentUser
+		});
+	}
+});
 
 //database connection error / success
 const db = mongoose.connection;

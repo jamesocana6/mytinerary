@@ -7,13 +7,15 @@ const User = require("../models/user.js");
 //I
 
 //N
-sessionsRouter.get('/new', (req, res) => {
-    res.render("./sessions/new.ejs", {
+//login page
+sessionsRouter.get('/login', (req, res) => {
+    res.render("./member/new.ejs", {
         currentUser: req.session.currentUser,
     });
 });
 
 //D
+//logout
 sessionsRouter.delete('/', (req, res) => {
     req.session.destroy((err) => {
         res.redirect('/');
@@ -21,14 +23,15 @@ sessionsRouter.delete('/', (req, res) => {
 });
 
 //U
+//login 
 sessionsRouter.post("/", (req, res) => {
     //Check for an existing user 
     User.findOne({
-        email: req.body.email,
+        username: req.body.username
     }, (err, foundUser) => {
-        //send error if no user is found
+        //send error if no user registered
         if (!foundUser) {
-            res.send("No user with that email address has been registered.");
+            res.send("No user with that username is registered.");
         } else {
             //if the user is found, compare the given password with the hashed password
             const passwordMatches = bcrypt.compareSync(req.body.password, foundUser.password);
