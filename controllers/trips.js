@@ -62,6 +62,7 @@ tripRouter.get("/:id", (req, res) => {
         //     res.send(user.trips);
         // })
         User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
+            //get the trip with the correct id
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
             res.render("./trips/show.ejs", {
                 currentUser: req.session.currentUser,
