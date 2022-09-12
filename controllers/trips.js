@@ -55,6 +55,26 @@ tripRouter.post("/", (req, res) => {
 //E
 
 //S
+tripRouter.get("/:id", (req, res) => {
+    if (req.session.currentUser) {
+        // User.findById(req.session.currentUser._id).populate("trips").exec(function(err, user) {
+        //     if (err) return handleError(err);
+        //     res.send(user.trips);
+        // })
+        User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
+            let trip = foundUser.trips.find(trip => trip._id == req.params.id);
+            res.render("./trips/show.ejs", {
+                currentUser: req.session.currentUser,
+                trip,
+            });
+        });
+        // User.findById(req.session.currentUser._id, (err, foundUser) => {
+        //     res.send(foundUser.trips)
+        // });
+    } else {
+        res.redirect("/");
+    }
+});
 
 
 function createTrip (req, res) {

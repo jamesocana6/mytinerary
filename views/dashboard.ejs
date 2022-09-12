@@ -10,7 +10,7 @@
     <ul>
         <% for (let trip of currentUser.trips) { %>
             <li>
-                <%= trip.name %> <br>
+                <a href="/trips/<%=trip._id%>"><%= trip.name %></a> <br>
             </li>
         <% } %>
     </ul>
