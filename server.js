@@ -4,6 +4,8 @@ require("dotenv").config();
 const methodOverride = require("method-override");
 const PORT = process.env.PORT;
 const mongoose = require("mongoose");
+const session = require("express-session");
+const sessionController = require("./controllers/sessions.js")
 const userController = require("./controllers/users.js");
 
 //Connect MongoDB
@@ -12,7 +14,13 @@ mongoose.connect(process.env.DATABASE_URL);
 //MIDDLEWARE 
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
-app.use("/mytrips", userController);
+app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+}));
+app.use("/user", userController);
+app.use("/sessions", sessionController);
 
 //database connection error / success
 const db = mongoose.connection;
