@@ -7,7 +7,8 @@
 <body>
     <%- include("../partials/nav.ejs")%>
     <h1>Edit Trip</h1>
-    <form action="/trips" method="POST">
+    <h2><%= trip.name %></h2>
+    <form action="/trips/<%=trip._id%>?_method=PUT" method="POST">
         Name: <input type="text" name="name"><br>
         Country: <input type="text" name="country"><br>
         Date: <input type="date" name="date"><br>

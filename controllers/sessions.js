@@ -39,7 +39,7 @@ sessionsRouter.post("/", (req, res) => {
                 //add the user to the session
                 req.session.currentUser = foundUser;
                 //redirect back to our home page
-                res.redirect("/");
+                res.redirect("/trips");
             } else {
                 //if the passwords don't match
                 res.send("Invalid credentials.")

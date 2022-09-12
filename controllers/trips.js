@@ -32,6 +32,28 @@ tripRouter.get("/new", (req, res) => {
 //D
 
 //U
+tripRouter.put("/:id", (req, res) => {
+    if (req.session.currentUser) {
+        User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
+            //get the trip with the correct id
+            let trip = foundUser.trips.find(trip => trip._id == req.params.id);
+            let tripIndex = foundUser.trips.findIndex(trip => trip._id == req.params.id);
+            console.log(foundUser.trips[tripIndex])
+            console.log(foundUser.trips[tripIndex]._id)
+            foundUser.trips[tripIndex] = req.body;
+            foundUser.save(err => {
+                console.log(foundUser.trips[tripIndex]._id)
+                res.redirect(`/trips/${foundUser.trips[tripIndex]._id}`)
+            });
+            // res.render("./trips/edit.ejs", {
+            //     currentUser: req.session.currentUser,
+            //     trip,
+            // });
+        });
+    } else {
+        res.redirect("/");
+    }
+});
 
 //C
 tripRouter.post("/", (req, res) => {
@@ -43,8 +65,6 @@ tripRouter.post("/", (req, res) => {
         User.findById(req.session.currentUser._id, (err, foundUser) => {
             foundUser.trips.push(req.body);
             foundUser.save(err => {
-                console.log(req.session.currentUser.trips)
-                console.log(foundUser.trips)
                 res.redirect("/trips");
             });
             // res.send(foundUser.trips);
