@@ -11,6 +11,10 @@
         <% for (let trip of currentUser.trips) { %>
             <li>
                 <a href="/trips/<%=trip._id%>"><%= trip.name %></a> <br>
+                <a href="/trips/<%=trip._id%>/edit">Edit</a> <br>
+                <form action="/trips/<%=trip._id%>?_method=DELETE" method="POST">
+                    <button type="submit">X</button>
+                </form>
             </li>
         <% } %>
     </ul>

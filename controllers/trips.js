@@ -30,25 +30,31 @@ tripRouter.get("/new", (req, res) => {
 });
 
 //D
+tripRouter.delete("/:id", (req, res) => {
+    if (req.session.currentUser) {
+        User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
+            //get the trip with the correct id
+            let tripIndex = foundUser.trips.findIndex(trip => trip._id == req.params.id);
+            foundUser.trips.splice(tripIndex, 1);
+            foundUser.save(err => {
+                res.redirect("/trips");
+            });
+        });
+    } else {
+        res.redirect("/");
+    }
+});
 
 //U
 tripRouter.put("/:id", (req, res) => {
     if (req.session.currentUser) {
         User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
             //get the trip with the correct id
-            let trip = foundUser.trips.find(trip => trip._id == req.params.id);
             let tripIndex = foundUser.trips.findIndex(trip => trip._id == req.params.id);
-            console.log(foundUser.trips[tripIndex])
-            console.log(foundUser.trips[tripIndex]._id)
             foundUser.trips[tripIndex] = req.body;
             foundUser.save(err => {
-                console.log(foundUser.trips[tripIndex]._id)
                 res.redirect(`/trips/${foundUser.trips[tripIndex]._id}`)
             });
-            // res.render("./trips/edit.ejs", {
-            //     currentUser: req.session.currentUser,
-            //     trip,
-            // });
         });
     } else {
         res.redirect("/");
@@ -91,10 +97,6 @@ tripRouter.get("/:id/edit", (req, res) => {
 //S
 tripRouter.get("/:id", (req, res) => {
     if (req.session.currentUser) {
-        // User.findById(req.session.currentUser._id).populate("trips").exec(function(err, user) {
-        //     if (err) return handleError(err);
-        //     res.send(user.trips);
-        // })
         User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
             //get the trip with the correct id
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
@@ -103,19 +105,10 @@ tripRouter.get("/:id", (req, res) => {
                 trip,
             });
         });
-        // User.findById(req.session.currentUser._id, (err, foundUser) => {
-        //     res.send(foundUser.trips)
-        // });
     } else {
         res.redirect("/");
     }
 });
 
-
-function createTrip (req, res) {
-    User.findById(req.session.currentUser._id, (err, foundUser) => {
-        foundUser.trips.push(req.body);
-    })
-}
 
 module.exports = tripRouter;
