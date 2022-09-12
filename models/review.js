@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const reviewSchema = mongoose.Schema({
     date: Date,
+    country: String,
     rating: {
         worth: Number,
         food: Number,

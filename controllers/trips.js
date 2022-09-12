@@ -7,14 +7,24 @@ const bcrypt = require("bcrypt");
 //ROUTES
 //I
 tripRouter.get("/", (req, res) => {
-    res.render("./dashboard.ejs", { 
-        currentUser: req.session.currentUser
-    });
+    if (req.session.currentUser) {
+        res.render("./dashboard.ejs", { 
+            currentUser: req.session.currentUser
+        });
+    } else {
+        res.redirect("/");
+    }
 });
 
 //N
 tripRouter.get("/new", (req, res) => {
-    res.render("./user/new.ejs");
+    if (req.session.currentUser) {
+        res.render("./trips/new.ejs", {
+            currentUser: req.session.currentUser,
+        });
+    } else {
+        res.redirect("/");
+    }
 });
 
 //D
@@ -24,20 +34,14 @@ tripRouter.get("/new", (req, res) => {
 //C
 tripRouter.post("/", (req, res) => {
     //Check for an existing username or email 
-    User.findOne({
-        username: req.body.username
-    }, (err, foundUser) => {
-        if (!foundUser) {
-            //overwrite the user password with hashed password, then pass that in to our database
-            req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-            User.create(req.body, (err, createdUser) => {
-                req.session.currentUser = createdUser;
-                res.redirect("/");
-            });
-        } else if (foundUser.username === req.body.username) {
-            res.send("That username address has already been registered.");
-        };
-    });
+    //res.send(req.session.currentUser);
+    if (!req.session.currentUser) {
+        res.send("no users login")
+    } else {
+        User.findById(req.session.currentUser._id, (err, foundUser) => {
+           res.send(foundUser);
+        });
+    }
 });
 
 //E

@@ -22,7 +22,7 @@ app.use(session({
 }));
 app.use("/user", userController);
 app.use("/member", sessionController);
-app.use(`/trip`, tripController);
+app.use(`/trips`, tripController);
 
 
 //ROUTE
