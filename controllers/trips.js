@@ -83,7 +83,8 @@ tripRouter.post("/", (req, res) => {
                         console.log(createdCountry);
                     })
                 } else {
-                    console.log("problem");
+                    foundCountry.numberOfVisits += 1;
+                    foundCountry.save(err => {});
                 }
             })
             foundUser.save(err => {
