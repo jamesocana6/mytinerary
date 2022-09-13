@@ -8,15 +8,7 @@ const countryNames = require("../models/countrySeed.js");
 //ROUTES
 //I
 reviewRouter.get("/", (req, res) => {
-    if (req.session.currentUser) {
-        User.findById(req.session.currentUser._id, (err, foundUser) => {
-            res.render("./dashboard.ejs", { 
-                currentUser: foundUser
-            });
-        });
-    } else {
-        res.redirect("/");
-    }
+
 });
 
 //N
@@ -40,117 +32,48 @@ reviewRouter.get("/:id/new", (req, res) => {
 
 //D
 reviewRouter.delete("/:id", (req, res) => {
-    if (req.session.currentUser) {
-        User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
-            //get the trip with the correct id
-            let tripIndex = foundUser.trips.findIndex(trip => trip._id == req.params.id);
-            foundUser.trips.splice(tripIndex, 1);
-            foundUser.save(err => {
-                res.redirect("/trips");
-            });
-        });
-    } else {
-        res.redirect("/");
-    }
+
 });
 
 //U
 reviewRouter.put("/:id", (req, res) => {
-    if (req.session.currentUser) {
-        User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
-            //get the trip with the correct id
-            let tripIndex = foundUser.trips.findIndex(trip => trip._id == req.params.id);
-            Country.findOne({ "name": req.body.country}, (err, foundCountry) => {
-                if(!foundCountry) {
-                    Country.create({
-                        name: req.body.country,
-                        numberOfVisits: 1,
-                    }, (err, createdCountry) => {
-                        console.log(createdCountry);
-                    })
-                } else {
-                    foundCountry.numberOfVisits += 1;
-                    foundCountry.save(err => {});
-                }
-            })
-            foundUser.trips[tripIndex] = req.body;
-            foundUser.save(err => {
-                res.redirect(`/trips/${foundUser.trips[tripIndex]._id}`)
-            });
-        });
-    } else {
-        res.redirect("/");
-    }
+
 });
 
 //C
-reviewRouter.post("/", (req, res) => {
+reviewRouter.post("/:id", (req, res) => {
     //Check for an existing username or email 
     //res.send(req.session.currentUser);
     if (!req.session.currentUser) {
         res.send("no users login")
     } else {
-        User.findById(req.session.currentUser._id, (err, foundUser) => {
-            foundUser.trips.push(req.body);
-            //if the country is not already a document saved in the DB create it
-            Country.findOne({ "name": req.body.country}, (err, foundCountry) => {
-                if(!foundCountry) {
-                    Country.create({
-                        name: req.body.country,
-                        numberOfVisits: 1,
-                    }, (err, createdCountry) => {
-                        console.log(createdCountry);
-                    })
-                } else {
-                    foundCountry.numberOfVisits += 1;
-                    foundCountry.save(err => {});
-                }
-            })
-            foundUser.save(err => {
-                res.redirect("/trips");
+        Review.create(req.body, (err, createdReview) => {
+            User.findById(req.session.currentUser._id, (err, foundUser) => {
+                //add review id to trip 
+                //get the trip with the correct id
+                let trip = foundUser.trips.find(trip => trip._id == req.params.id);
+                trip.review = createdReview._id;
+                //add review id to country 
+                Country.findOne({ "name": trip.country}, (err, foundCountry) => {
+                    foundCountry.reviews.push(createdReview._id);
+                    foundCountry.save();
+                })
+                foundUser.save(err => {
+                    res.redirect(`/trips/${trip._id}`);
+                });
             });
-            // res.send(foundUser.trips);
         });
     }
 });
 
 //E
 reviewRouter.get("/:id/edit", (req, res) => {
-    if (req.session.currentUser) {
-        User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
-            //get the trip with the correct id
-            let trip = foundUser.trips.find(trip => trip._id == req.params.id);
-            res.render("./trips/edit.ejs", {
-                currentUser: foundUser,
-                trip,
-                countryNames,
-            });
-        });
-    } else {
-        res.redirect("/");
-    }
+
 });
 
 //S
 reviewRouter.get("/:id", (req, res) => {
-    if (req.session.currentUser) {
-        User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
-            //get the trip with the correct id
-            let trip = foundUser.trips.find(trip => trip._id == req.params.id);
-            console.log(trip)
-            console.log(trip.country)
-            Country.find({ "name": trip.country }, (err, foundCountry) => {
-                console.log(foundCountry);
-                res.render("./trips/show.ejs", {
-                    currentUser: foundUser,
-                    trip,
-                    foundCountry,
-                });
-            });
-        });
-    } else {
-        res.redirect("/");
-    }
+
 });
 
 

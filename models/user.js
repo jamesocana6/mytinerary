@@ -8,7 +8,7 @@ const tripSchema = mongoose.Schema({
     numberOfPeople: Number,
     totalCost: Number,
     placesVisited: [String],
-    reviews: [{type: mongoose.Schema.Types.ObjectId, ref: "Review"}],
+    review: {type: mongoose.Schema.Types.ObjectId, ref: "Review"},
 });
 
 const userSchema = mongoose.Schema({

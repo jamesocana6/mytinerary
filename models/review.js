@@ -11,6 +11,7 @@ const reviewSchema = mongoose.Schema({
         overall: Number,
     },
     comment: String,
+    anonymous: Boolean,
 });
 
 const Review = mongoose.model("Review", reviewSchema);
