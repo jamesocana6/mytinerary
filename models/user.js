@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const tripSchema = mongoose.Schema({
     name: String,
     country: String,
-    countryId: [{type: mongoose.Schema.Types.ObjectId, ref: "Country"}],
-    date: Date,
+    date: String,
     lengthOfTrip: Number,
     numberOfPeople: Number,
     totalCost: Number,

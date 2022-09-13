@@ -54,6 +54,19 @@ tripRouter.put("/:id", (req, res) => {
         User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
             //get the trip with the correct id
             let tripIndex = foundUser.trips.findIndex(trip => trip._id == req.params.id);
+            Country.findOne({ "name": req.body.country}, (err, foundCountry) => {
+                if(!foundCountry) {
+                    Country.create({
+                        name: req.body.country,
+                        numberOfVisits: 1,
+                    }, (err, createdCountry) => {
+                        console.log(createdCountry);
+                    })
+                } else {
+                    foundCountry.numberOfVisits += 1;
+                    foundCountry.save(err => {});
+                }
+            })
             foundUser.trips[tripIndex] = req.body;
             foundUser.save(err => {
                 res.redirect(`/trips/${foundUser.trips[tripIndex]._id}`)
@@ -104,6 +117,7 @@ tripRouter.get("/:id/edit", (req, res) => {
             res.render("./trips/edit.ejs", {
                 currentUser: foundUser,
                 trip,
+                countryNames,
             });
         });
     } else {
@@ -117,9 +131,15 @@ tripRouter.get("/:id", (req, res) => {
         User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
             //get the trip with the correct id
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
-            res.render("./trips/show.ejs", {
-                currentUser: foundUser,
-                trip,
+            console.log(trip)
+            console.log(trip.country)
+            Country.find({ "name": trip.country }, (err, foundCountry) => {
+                console.log(foundCountry);
+                res.render("./trips/show.ejs", {
+                    currentUser: foundUser,
+                    trip,
+                    foundCountry,
+                });
             });
         });
     } else {

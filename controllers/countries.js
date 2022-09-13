@@ -11,7 +11,17 @@ const Country = require("../models/country.js");
 countryRouter.get("/", (req, res) => {
     Country.find({}, (err, allCountries) => {
         //Sort countries in alphabetical order
-        allCountries = allCountries.sort((a,b) => a.name.charCodeAt(0) - b.name.charCodeAt(0));
+        allCountries = allCountries.sort((a, b) => {
+            let aFixed = a.name.toUpperCase(); 
+            let bFixed = b.name.toUpperCase(); 
+            if (aFixed < bFixed) {
+                return -1;
+            }
+            if (aFixed > bFixed) {
+                return 1;
+            }
+            return 0;
+        });
         res.render("./country/index.ejs", {
             countries: allCountries,
             currentUser: req.session.currentUser,

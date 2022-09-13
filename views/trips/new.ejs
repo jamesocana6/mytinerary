@@ -18,10 +18,10 @@
                 <% } %>
             </datalist>
         Date: <input type="date" name="date"><br>
-        Length of Trip (in Days): <input type="number" name="lengthOfTrip"><br>
-        Number of People: <input type="number" name="numberOfPeople"><br>
-        Total Cost: <input type="number" name="totalCost"><br>
-        Places Visited: <input type="text" name="placesVisited"><br>
+        Length of Trip (in Days): <input type="number" name="lengthOfTrip" min="0"><br>
+        Number of People: <input type="number" name="numberOfPeople" min="1"><br>
+        Total Cost: <input type="number" name="totalCost" min="0"><br>
+        Notable Places: <input type="text" name="placesVisited"><br>
         <input type="submit" value="Add Trip">
     </form>
 </body>

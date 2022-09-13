@@ -9,7 +9,7 @@
     <a href="/trips/<%=trip._id%>/edit"><button>Edit Trip</button></a>
     <h1><%= trip.name %></h1>
     <h2><%= trip.date%></h2>
-    <h2><%= trip.country%></h2>
+    <a href="/countries/<%=foundCountry._id%>"><h2><%= trip.country%></h2></a>
     Number of people: <h2><%= trip.numberOfPeople%></h2>
     Total Cost: <h2>$<%= trip.totalCost%></h2>
     Length of Trip (in Days): <h2><%= trip.lengthOfTrip%></h2>
