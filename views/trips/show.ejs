@@ -13,7 +13,12 @@
     Number of people: <h2><%= trip.numberOfPeople%></h2>
     Total Cost: <h2>$<%= trip.totalCost%></h2>
     Length of Trip (in Days): <h2><%= trip.lengthOfTrip%></h2>
-    <h2><%= trip.reviews%></h2>
-    <a href="/reviews/<%=trip._id%>/new"><button>Add a Review</button></a>
+    <!-- INSERT REVIEW OF THE TRIP IF REVIEW IS MADE -->
+    <% if (trip.review) { %>
+        <h2><%= foundReview %></h2>
+        <a href="/reviews/<%=trip._id%>/edit"><button>Edit Review</button></a>
+    <% } else { %>
+        <a href="/reviews/<%=trip._id%>/new"><button>Add a Review</button></a>
+    <% } %>
 </body>
 </html>

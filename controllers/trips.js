@@ -130,11 +130,15 @@ tripRouter.get("/:id", (req, res) => {
         User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
             //get the trip with the correct id
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
-            Country.findOne({ "name": trip.country }, (err, foundCountry) => {
-                res.render("./trips/show.ejs", {
-                    currentUser: foundUser,
-                    trip,
-                    foundCountry,
+            //find the review referenced by the trip
+            Review.findOne({ "_id": trip.review}, (err, foundReview) => {
+                Country.findOne({ "name": trip.country }, (err, foundCountry) => {
+                    res.render("./trips/show.ejs", {
+                        currentUser: foundUser,
+                        trip,
+                        foundCountry,
+                        foundReview,
+                    });
                 });
             });
         });

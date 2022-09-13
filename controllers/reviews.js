@@ -53,7 +53,6 @@ reviewRouter.post("/:id", (req, res) => {
             req.body.anonymous = false;
         }
         Review.create(req.body, (err, createdReview) => {
-            console.log(req.body)
             User.findById(req.session.currentUser._id, (err, foundUser) => {
                 //add review id to trip 
                 //get the trip with the correct id
@@ -74,7 +73,24 @@ reviewRouter.post("/:id", (req, res) => {
 
 //E
 reviewRouter.get("/:id/edit", (req, res) => {
-
+    if (req.session.currentUser) {
+        User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
+            //get the trip with the correct id
+            let trip = foundUser.trips.find(trip => trip._id == req.params.id);
+            Review.findOne(req.body, (err, foundReview) => {
+                Country.findOne({ "_id": trip.review }, (err, foundCountry) => {
+                    res.render("./review/edit.ejs", {
+                        currentUser: foundUser,
+                        trip,
+                        foundCountry,
+                        foundReview,
+                    });
+                });
+            });
+        });
+    } else {
+        res.redirect("/");
+    }
 });
 
 //S
