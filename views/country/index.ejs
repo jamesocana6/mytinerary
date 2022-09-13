@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyTinerary | Countries</title>
+</head>
+<body>
+    <%- include("../partials/nav.ejs")%>
+    <h1>Countries</h1>
+    <ul>
+        <% for (let country of countries) { %>
+            <li>
+                <a href="/countries/<%=country._id%>"><%=country.name%></a>
+            </li>
+        <% } %>
+    </ul>
+</body>
+</html>
