@@ -13,10 +13,10 @@
     <h2><%=trip.totalCost%></h2>
     <form action="/reviews/<%=trip._id%>" method="POST">
         Ratings: <br>
-            Food (0-5) <input type="range" name="meta[food]" id="meta[food]" min="0" max="5"><br>
-            Sights (0-5) <input type="range" name="meta[sights]" id="meta[sights]" min="0" max="5"><br>
-            Worth (0-5) <input type="range" name="meta[worth]" id="meta[worth]" min="0" max="5"><br>
-            Overall (0-5) <input type="range" name="meta[overall]" id="meta[overall]" min="0" max="5"><br>
+            Food (0-5) <input type="range" name="rating.food" id="rating[food]" min="0" max="5"><br>
+            Sights (0-5) <input type="range" name="rating.sights" id="rating[sights]" min="0" max="5"><br>
+            Worth (0-5) <input type="range" name="rating.worth" id="rating[worth]" min="0" max="5"><br>
+            Overall (0-5) <input type="range" name="rating.overall" id="rating[overall]" min="0" max="5"><br>
             Comments: <textarea name="comment" id="comment" style="min-width: 500px; min-height: 50px;"></textarea><br>
             Would you like this review to be anonymous? <input type="checkbox" name="anonymous" id="anonymous"><br>
         <input type="submit" value="Add Review">

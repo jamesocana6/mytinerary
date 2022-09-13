@@ -47,7 +47,13 @@ reviewRouter.post("/:id", (req, res) => {
     if (!req.session.currentUser) {
         res.send("no users login")
     } else {
+        if (req.body.anonymous === "on") {
+            req.body.anonymous = true;
+        } else {
+            req.body.anonymous = false;
+        }
         Review.create(req.body, (err, createdReview) => {
+            console.log(req.body)
             User.findById(req.session.currentUser._id, (err, foundUser) => {
                 //add review id to trip 
                 //get the trip with the correct id
