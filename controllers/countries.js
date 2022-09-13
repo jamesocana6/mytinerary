@@ -29,7 +29,7 @@ countryRouter.get("/", (req, res) => {
 
 //S
 countryRouter.get("/:id", (req, res) => {
-    Country.findById(res.params.id, (err, foundCountry) => {
+    Country.findById(req.params.id, (err, foundCountry) => {
         res.render("./country/show.ejs", {
             country: foundCountry,
             currentUser: req.session.currentUser,
