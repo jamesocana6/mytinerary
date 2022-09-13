@@ -77,8 +77,8 @@ reviewRouter.get("/:id/edit", (req, res) => {
         User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
             //get the trip with the correct id
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
-            Review.findOne(req.body, (err, foundReview) => {
-                Country.findOne({ "_id": trip.review }, (err, foundCountry) => {
+            Review.findOne({ "_id": trip.review }, (err, foundReview) => {
+                Country.findOne({ "name": trip.country }, (err, foundCountry) => {
                     res.render("./review/edit.ejs", {
                         currentUser: foundUser,
                         trip,

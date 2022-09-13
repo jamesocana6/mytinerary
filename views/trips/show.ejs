@@ -15,7 +15,11 @@
     Length of Trip (in Days): <h2><%= trip.lengthOfTrip%></h2>
     <!-- INSERT REVIEW OF THE TRIP IF REVIEW IS MADE -->
     <% if (trip.review) { %>
-        <h2><%= foundReview %></h2>
+        <h2>Food: <%= foundReview.rating.food %></h2>
+        <h2>Sights: <%= foundReview.rating.sights %></h2>
+        <h2>Worth: <%= foundReview.rating.worth %></h2>
+        <h2>Overall Experience: <%= foundReview.rating.overall %></h2>
+        <h2><%= foundReview.comment %></h2>
         <a href="/reviews/<%=trip._id%>/edit"><button>Edit Review</button></a>
     <% } else { %>
         <a href="/reviews/<%=trip._id%>/new"><button>Add a Review</button></a>
