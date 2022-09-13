@@ -37,7 +37,33 @@ reviewRouter.delete("/:id", (req, res) => {
 
 //U
 reviewRouter.put("/:id", (req, res) => {
-
+    //Check for an existing username or email 
+    //res.send(req.session.currentUser);
+    if (!req.session.currentUser) {
+        res.send("no users login")
+    } else {
+        if (req.body.anonymous === "on") {
+            req.body.anonymous = true;
+        } else {
+            req.body.anonymous = false;
+        }
+        User.findById(req.session.currentUser._id, (err, foundUser) => {
+            //add review id to trip 
+            //get the trip with the correct id
+            let trip = foundUser.trips.find(trip => trip._id == req.params.id);
+            Review.findByIdAndUpdate(trip.review, req.body, (err, foundReview) => {
+                trip.review = foundReview._id;
+                //add review id to country 
+                Country.findOne({ "name": trip.country}, (err, foundCountry) => {
+                    foundCountry.reviews.push(foundReview._id);
+                    foundCountry.save();
+                })
+                foundUser.save(err => {
+                    res.redirect(`/trips/${trip._id}`);
+                });
+            });
+        });
+    }
 });
 
 //C

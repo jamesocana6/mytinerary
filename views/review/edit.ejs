@@ -10,8 +10,8 @@
     <h2><%=trip.name%></h2>
     <h2><%=trip.country%></h2>
     <h2><%=trip.date%></h2>
-    <h2><%=trip.totalCost%></h2>
-    <form action="/reviews/<%=trip._id%>/edit?_method=PUT" method="POST">
+    <h2>$<%=trip.totalCost%></h2>
+    <form action="/reviews/<%=trip._id%>?_method=PUT" method="POST">
         Ratings: <br>
             Food (0-5) <input type="range" name="rating.food" id="rating[food]" min="0" max="5" value="<%=foundReview.rating.food%>"><br>
             Sights (0-5) <input type="range" name="rating.sights" id="rating[sights]" min="0" max="5" value="<%=foundReview.rating.sights%>"><br>
