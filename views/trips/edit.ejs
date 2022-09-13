@@ -10,13 +10,19 @@
     <h2><%= trip.name %></h2>
     <form action="/trips/<%=trip._id%>?_method=PUT" method="POST">
         Name: <input type="text" name="name"><br>
-        Country: <input type="text" name="country"><br>
+        Country: <input type="text" name="country" list="country"><br>
+        <datalist id="country">
+            <%for (let country of countryNames) { %>
+                <option>
+                    <%=country.name%>
+                </option>
+            <% } %>
+        </datalist>
         Date: <input type="date" name="date"><br>
         Length of Trip (in Days): <input type="number" name="lengthOfTrip"><br>
         Number of People: <input type="number" name="numberOfPeople"><br>
         Total Cost: <input type="number" name="totalCost"><br>
         Places Visited: <input type="text" name="placesVisited"><br>
-        Trip Completed? <input type="checkbox" name="isComplete"><br>
         <input type="submit" value="Edit Trip">
     </form>
 </body>

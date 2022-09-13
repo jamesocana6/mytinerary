@@ -9,13 +9,12 @@ const tripSchema = mongoose.Schema({
     numberOfPeople: Number,
     totalCost: Number,
     placesVisited: [String],
-    isComplete: Boolean,
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref: "Review"}],
 });
 
 const userSchema = mongoose.Schema({
     username: { type: String, unique: true, required: true },
-    password: { type: String, unique: true, required: true },
+    password: { type: String, required: true },
     trips: [tripSchema],
 });
 

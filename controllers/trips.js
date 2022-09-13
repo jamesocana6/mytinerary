@@ -2,7 +2,9 @@ const express = require("express");
 const Review = require("../models/review.js");
 const tripRouter = express.Router();
 const User = require("../models/user.js");
+const Country = require("../models/country.js");
 const bcrypt = require("bcrypt");
+const countryNames = require("../models/countrySeed.js");
 
 //ROUTES
 //I
@@ -23,6 +25,7 @@ tripRouter.get("/new", (req, res) => {
     if (req.session.currentUser) {
         res.render("./trips/new.ejs", {
             currentUser: req.session.currentUser,
+            countryNames,
         });
     } else {
         res.redirect("/");
@@ -70,6 +73,19 @@ tripRouter.post("/", (req, res) => {
     } else {
         User.findById(req.session.currentUser._id, (err, foundUser) => {
             foundUser.trips.push(req.body);
+            //if the country is not already a document saved in the DB create it
+            Country.findOne({ "name": req.body.country}, (err, foundCountry) => {
+                if(!foundCountry) {
+                    Country.create({
+                        name: req.body.country,
+                        numberOfVisits: 1,
+                    }, (err, createdCountry) => {
+                        console.log(createdCountry);
+                    })
+                } else {
+                    console.log("problem");
+                }
+            })
             foundUser.save(err => {
                 res.redirect("/trips");
             });
@@ -85,7 +101,7 @@ tripRouter.get("/:id/edit", (req, res) => {
             //get the trip with the correct id
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
             res.render("./trips/edit.ejs", {
-                currentUser: req.session.currentUser,
+                currentUser: foundUser,
                 trip,
             });
         });
@@ -101,7 +117,7 @@ tripRouter.get("/:id", (req, res) => {
             //get the trip with the correct id
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
             res.render("./trips/show.ejs", {
-                currentUser: req.session.currentUser,
+                currentUser: foundUser,
                 trip,
             });
         });
