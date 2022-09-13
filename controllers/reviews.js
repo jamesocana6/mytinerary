@@ -1,13 +1,13 @@
 const express = require("express");
 const Review = require("../models/review.js");
-const tripRouter = express.Router();
+const reviewRouter = express.Router();
 const User = require("../models/user.js");
 const Country = require("../models/country.js");
 const countryNames = require("../models/countrySeed.js");
 
 //ROUTES
 //I
-tripRouter.get("/", (req, res) => {
+reviewRouter.get("/", (req, res) => {
     if (req.session.currentUser) {
         User.findById(req.session.currentUser._id, (err, foundUser) => {
             res.render("./dashboard.ejs", { 
@@ -20,11 +20,18 @@ tripRouter.get("/", (req, res) => {
 });
 
 //N
-tripRouter.get("/new", (req, res) => {
+reviewRouter.get("/new", (req, res) => {
     if (req.session.currentUser) {
-        res.render("./trips/new.ejs", {
-            currentUser: req.session.currentUser,
-            countryNames,
+        User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
+            //get the trip with the correct id
+            let trip = foundUser.trips.find(trip => trip._id == req.params.id);
+            Country.findOne({ "name": trip.country }, (err, foundCountry) => {
+                res.render("./trips/show.ejs", {
+                    currentUser: foundUser,
+                    trip,
+                    foundCountry,
+                });
+            });
         });
     } else {
         res.redirect("/");
@@ -32,7 +39,7 @@ tripRouter.get("/new", (req, res) => {
 });
 
 //D
-tripRouter.delete("/:id", (req, res) => {
+reviewRouter.delete("/:id", (req, res) => {
     if (req.session.currentUser) {
         User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
             //get the trip with the correct id
@@ -48,7 +55,7 @@ tripRouter.delete("/:id", (req, res) => {
 });
 
 //U
-tripRouter.put("/:id", (req, res) => {
+reviewRouter.put("/:id", (req, res) => {
     if (req.session.currentUser) {
         User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
             //get the trip with the correct id
@@ -77,7 +84,7 @@ tripRouter.put("/:id", (req, res) => {
 });
 
 //C
-tripRouter.post("/", (req, res) => {
+reviewRouter.post("/", (req, res) => {
     //Check for an existing username or email 
     //res.send(req.session.currentUser);
     if (!req.session.currentUser) {
@@ -108,7 +115,7 @@ tripRouter.post("/", (req, res) => {
 });
 
 //E
-tripRouter.get("/:id/edit", (req, res) => {
+reviewRouter.get("/:id/edit", (req, res) => {
     if (req.session.currentUser) {
         User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
             //get the trip with the correct id
@@ -125,12 +132,15 @@ tripRouter.get("/:id/edit", (req, res) => {
 });
 
 //S
-tripRouter.get("/:id", (req, res) => {
+reviewRouter.get("/:id", (req, res) => {
     if (req.session.currentUser) {
         User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
             //get the trip with the correct id
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
-            Country.findOne({ "name": trip.country }, (err, foundCountry) => {
+            console.log(trip)
+            console.log(trip.country)
+            Country.find({ "name": trip.country }, (err, foundCountry) => {
+                console.log(foundCountry);
                 res.render("./trips/show.ejs", {
                     currentUser: foundUser,
                     trip,
@@ -144,4 +154,4 @@ tripRouter.get("/:id", (req, res) => {
 });
 
 
-module.exports = tripRouter;
+module.exports = reviewRouter;

@@ -1,11 +1,13 @@
 <nav>
 	<% if(currentUser) { %>
-		<a href="/trips">Home</a>
+		<a href="/trips">My Trips</a>
+		<a href="/countries">Countries</a>
 		<form action="/member?_method=DELETE" method="POST">
-			<input type="submit" value="Log Out" />
+            <input type="submit" value="Log Out" />
 		</form>
-	<% } else { %>
-		<a href="/">Home</a>
+        <% } else { %>
+        <a href="/">Home</a>
+        <a href="/countries">Countries</a>
 		<a href="/user/new">Register</a>
 		<a href="/member/login">Log In</a>
 	<% } %>
