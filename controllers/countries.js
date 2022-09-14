@@ -9,8 +9,6 @@ const Country = require("../models/country.js");
 //I
 countryRouter.get("/home", (req, res) => {
     Country.find({}).populate("reviews").exec(function (err, allCountries) {
-        console.log(allCountries)
-        console.log(allCountries[0].reviews)
         //Sort countries in alphabetical order
         allCountries = allCountries.sort((a, b) => {
             let aFixed = a.name.toUpperCase();
@@ -26,6 +24,7 @@ countryRouter.get("/home", (req, res) => {
         res.render("./country/index.ejs", {
             countries: allCountries,
             currentUser: req.session.currentUser,
+            countryAvgRating,
         });
     });
     // Country.find({}, (err, allCountries) => {
@@ -65,10 +64,39 @@ countryRouter.get("/countries/:id", (req, res) => {
             currentUser: req.session.currentUser,
             country,
             reviews: country.reviews,
+            countryAvgRating,
         });
     })
 });
 
-
+function countryAvgRating(country) {
+    let avgFoodArr = [];
+    let avgSightsArr = [];
+    let avgWorthArr = [];
+    let avgOverallArr = [];
+    for (let review of country.reviews) {
+        for (let i = 0; i < 4 ; i++ ) {
+            switch (i) {
+                case 0:
+                    avgFoodArr.push(review.rating.food);
+                    break;
+                case 1:
+                    avgSightsArr.push(review.rating.sights);
+                    break;
+                case 2:
+                    avgWorthArr.push(review.rating.worth);
+                    break;
+                case 3:
+                    avgOverallArr.push(review.rating.overall);
+                    break;
+            }
+        }
+    }
+    let avgFood = (avgFoodArr.reduce((a,b) => a+b ) / avgFoodArr.length).toFixed(2);
+    let avgSights = (avgSightsArr.reduce((a,b) => a+b ) / avgFoodArr.length).toFixed(2);
+    let avgWorth = (avgWorthArr.reduce((a,b) => a+b ) / avgFoodArr.length).toFixed(2);
+    let avgOverall = (avgOverallArr.reduce((a,b) => a+b ) / avgFoodArr.length).toFixed(2);
+    return [avgFood, avgSights, avgWorth, avgOverall];
+}
 
 module.exports = countryRouter;

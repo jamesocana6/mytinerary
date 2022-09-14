@@ -6,11 +6,17 @@
 </head>
 <body>
     <%- include("../partials/nav.ejs")%>
-    <h1>Countries</h1>
-    <ul>
+    <h1>Take a trip!</h1>
+    <ul>        
         <% for (let country of countries) { %>
             <li>
                 <a href="/countries/<%=country._id%>"><%=country.name%></a>
+                <% if (country.reviews.length > 0) { %>
+                    Food: <%= countryAvgRating(country)[0] %>
+                    Sights: <%= countryAvgRating(country)[1] %>
+                    Worth: <%= countryAvgRating(country)[2] %>
+                    Overall: <%= countryAvgRating(country)[3] %>
+                <% } %>
             </li>
         <% } %>
     </ul>

@@ -8,6 +8,10 @@
     <%- include("../partials/nav.ejs")%>
     <h1><%=country.name%></h1>
     <h2>Number of Visits: <%=country.numberOfVisits%></h2>
+    Food: <%= countryAvgRating(country)[0] %>
+    Sights: <%= countryAvgRating(country)[1] %>
+    Worth: <%= countryAvgRating(country)[2] %>
+    Overall: <%= countryAvgRating(country)[3] %>
     <% for (let review of reviews) { %>
         <div>
             <% if (review.anonymous) { %>
