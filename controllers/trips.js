@@ -74,6 +74,11 @@ tripRouter.delete("/:id", (req, res) => {
 tripRouter.put("/:id", (req, res) => {
     if (req.session.currentUser) {
         User.findOne({ "_id": req.session.currentUser._id}, (err, foundUser) => {
+            let trip = foundUser.trips.find(trip => trip._id == req.params.id);
+            Country.findOne({ "name": trip.country}, (err, previousCountry) => {
+                previousCountry.numberOfVisits -= 1;
+                previousCountry.save();
+            })
             //get the trip with the correct id
             let tripIndex = foundUser.trips.findIndex(trip => trip._id == req.params.id);
             Country.findOne({ "name": req.body.country}, (err, foundCountry) => {
@@ -84,6 +89,7 @@ tripRouter.put("/:id", (req, res) => {
                     }, (err, createdCountry) => {
                     })
                 } else {
+                    console.log(foundCountry);
                     foundCountry.numberOfVisits += 1;
                     foundCountry.save(err => {});
                 }
