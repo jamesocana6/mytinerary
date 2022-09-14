@@ -32,7 +32,7 @@ reviewRouter.get("/:id/new", (req, res) => {
 
 //D
 reviewRouter.delete("/:id", (req, res) => {
-     //Check for an existing username or email 
+    //Check for an existing username or email 
     //res.send(req.session.currentUser);
     if (req.session.currentUser) {
         User.findById(req.session.currentUser._id, (err, foundUser) => {
@@ -41,7 +41,6 @@ reviewRouter.delete("/:id", (req, res) => {
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
             Review.findByIdAndDelete(trip.review, req.body, (err, foundReview) => {
                 trip.review = undefined;
-                //add review id to country 
                 Country.findOne({ "name": trip.country }, (err, foundCountry) => {
                     //Need to make a deep clone to be able to use the findIndex function.
                     let testarray = [];
