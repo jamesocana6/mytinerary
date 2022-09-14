@@ -21,6 +21,9 @@
         <h2>Overall Experience: <%= foundReview.rating.overall %></h2>
         <h2><%= foundReview.comment %></h2>
         <a href="/reviews/<%=trip._id%>/edit"><button>Edit Review</button></a>
+        <form action="/reviews/<%=trip._id%>?_method=DELETE" method="POST">
+            <button>X</button>
+        </form>
     <% } else { %>
         <a href="/reviews/<%=trip._id%>/new"><button>Add a Review</button></a>
     <% } %>

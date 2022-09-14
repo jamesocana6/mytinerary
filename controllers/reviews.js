@@ -32,16 +32,43 @@ reviewRouter.get("/:id/new", (req, res) => {
 
 //D
 reviewRouter.delete("/:id", (req, res) => {
-
+     //Check for an existing username or email 
+    //res.send(req.session.currentUser);
+    if (req.session.currentUser) {
+        User.findById(req.session.currentUser._id, (err, foundUser) => {
+            //add review id to trip 
+            //get the trip with the correct id
+            let trip = foundUser.trips.find(trip => trip._id == req.params.id);
+            Review.findByIdAndDelete(trip.review, req.body, (err, foundReview) => {
+                trip.review = undefined;
+                //add review id to country 
+                Country.findOne({ "name": trip.country }, (err, foundCountry) => {
+                    //Need to make a deep clone to be able to use the findIndex function.
+                    let testarray = [];
+                    //Turn array of objects to strings
+                    for (const objId of foundCountry.reviews) {
+                        testarray.push(objId.toString());
+                    }
+                    //splice index of string from the array of object ids
+                    let indexReview = testarray.indexOf(foundReview._id.toString())
+                    foundCountry.reviews.splice(indexReview, 1);
+                    foundCountry.save();
+                })
+                foundUser.save(err => {
+                    res.redirect(`/trips/${trip._id}`);
+                });
+            });
+        });
+    } else {
+        res.redirect("/");
+    }
 });
 
 //U
 reviewRouter.put("/:id", (req, res) => {
     //Check for an existing username or email 
     //res.send(req.session.currentUser);
-    if (!req.session.currentUser) {
-        res.send("no users login")
-    } else {
+    if (req.session.currentUser) {
         if (req.body.anonymous === "on") {
             req.body.anonymous = true;
         } else {
@@ -63,6 +90,8 @@ reviewRouter.put("/:id", (req, res) => {
                 });
             });
         });
+    } else {
+        res.redirect("/");
     }
 });
 
@@ -70,9 +99,7 @@ reviewRouter.put("/:id", (req, res) => {
 reviewRouter.post("/:id", (req, res) => {
     //Check for an existing username or email 
     //res.send(req.session.currentUser);
-    if (!req.session.currentUser) {
-        res.send("no users login")
-    } else {
+    if (req.session.currentUser) {
         if (req.body.anonymous === "on") {
             req.body.anonymous = true;
         } else {
@@ -94,6 +121,8 @@ reviewRouter.post("/:id", (req, res) => {
                 });
             });
         });
+    } else {
+        res.send("no users login")
     }
 });
 
