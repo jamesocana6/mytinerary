@@ -1,7 +1,6 @@
 const express = require("express");
-//const Review = require("../models/review.js");
 const countryRouter = express.Router();
-//const User = require("../models/user.js");
+const User = require("../models/user.js");
 const Country = require("../models/country.js");
 //const bcrypt = require("bcrypt");
 //const countryNames = require("../models/countrySeed.js");
@@ -42,14 +41,12 @@ countryRouter.get("/home", (req, res) => {
 //S
 countryRouter.get("/countries/:id", (req, res) => {
     Country.findById(req.params.id).populate("reviews").exec(function (err, country) {
-        if (err) return handleError(err);
         res.render("./country/show.ejs", {
             currentUser: req.session.currentUser,
             country,
             reviews: country.reviews,
         });
     })
-
 });
 
 

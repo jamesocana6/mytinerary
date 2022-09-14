@@ -7,9 +7,6 @@ const countryNames = require("../models/countrySeed.js");
 
 //ROUTES
 //I
-reviewRouter.get("/", (req, res) => {
-
-});
 
 //N
 reviewRouter.get("/:id/new", (req, res) => {
@@ -108,6 +105,8 @@ reviewRouter.post("/:id", (req, res) => {
             User.findById(req.session.currentUser._id, (err, foundUser) => {
                 //add review id to trip 
                 //get the trip with the correct id
+                createdReview.username = foundUser.username;
+                createdReview.save();
                 let trip = foundUser.trips.find(trip => trip._id == req.params.id);
                 trip.review = createdReview._id;
                 //add review id to country 
@@ -148,9 +147,6 @@ reviewRouter.get("/:id/edit", (req, res) => {
 });
 
 //S
-reviewRouter.get("/:id", (req, res) => {
-
-});
 
 
 module.exports = reviewRouter;
