@@ -8,9 +8,17 @@
     <%- include("./partials/nav.ejs")%>
     <h1><%= currentUser.username %>'s Trips</h1>
     <ul>
-        <% for (let trip of currentUser.trips) { %>
+        <% for (let trip of tripsArr) { %>
             <li>
-                <a href="/trips/<%=trip._id%>"><%= trip.name %></a> <br>
+                <a href="/trips/<%=trip._id%>"><%= trip.name %></a> 
+                <%= trip.country %> 
+                <% if (trip.review) { %>
+                Food: <%= trip.review.rating.food %> 
+                Sights: <%= trip.review.rating.sights %> 
+                Worth: <%= trip.review.rating.worth %> 
+                Overall: <%= trip.review.rating.overall %> 
+                <% } %>
+                <br>
                 <a href="/trips/<%=trip._id%>/edit">Edit</a> <br>
                 <form action="/trips/<%=trip._id%>?_method=DELETE" method="POST">
                     <button type="submit">X</button>
