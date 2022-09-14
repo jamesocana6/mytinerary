@@ -16,6 +16,7 @@ mongoose.connect(process.env.DATABASE_URL);
 
 //MIDDLEWARE 
 app.use(express.urlencoded({extended: true}));
+app.use(express.static("public"));
 app.use(methodOverride("_method"));
 app.use(session({
     secret: process.env.SECRET,

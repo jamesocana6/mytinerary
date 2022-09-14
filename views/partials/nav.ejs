@@ -1,10 +1,8 @@
-<nav>
+<nav class="indigo lighten-2">
 	<% if(currentUser) { %>
         <a href="/home">Home</a>
 		<a href="/trips">My Trips</a>
-		<form action="/member?_method=DELETE" method="POST">
-            <button>Log Out</button>
-		</form>
+		<a href="/member/logout">Log Out</a>
         <% } else { %>
         <a href="/home">Home</a>
 		<a href="/user/new">Register</a>

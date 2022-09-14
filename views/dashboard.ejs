@@ -6,9 +6,10 @@
 <body>
     <%- include("./partials/nav.ejs")%>
     <h1><%= currentUser.username %>'s Trips</h1>
-    <ul>
+    <a href="/trips/new">Add New Trip</a>
+    <div class="container center-align hoverable">
         <% for (let trip of tripsArr) { %>
-            <li>
+            <div class="container card-panel left-align">
                 <a href="/trips/<%=trip._id%>"><%= trip.name %></a> 
                 <%= trip.country %> 
                 <% if (trip.review) { %>
@@ -22,9 +23,8 @@
                 <form action="/trips/<%=trip._id%>?_method=DELETE" method="POST">
                     <button type="submit">X</button>
                 </form>
-            </li>
+            </div>
         <% } %>
-    </ul>
-    <a href="/trips/new">Add New Trip</a>
+    </div>
 </body>
 </html>

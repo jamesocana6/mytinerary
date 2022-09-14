@@ -13,6 +13,11 @@ sessionsRouter.get('/login', (req, res) => {
         currentUser: req.session.currentUser,
     });
 });
+sessionsRouter.get('/logout', (req, res) => {
+    res.render("./member/logout.ejs", {
+        currentUser: req.session.currentUser,
+    });
+});
 
 //D
 //logout

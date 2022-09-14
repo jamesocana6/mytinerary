@@ -5,10 +5,10 @@
 </head>
 <body>
     <%- include("../partials/nav.ejs")%>
-    <h1>Take a trip!</h1>
-    <ul>        
+    <h4>Take a trip!</h4>
+    <div class="container center-align">       
         <% for (let country of countries) { %>
-            <li>
+            <div class="container card-panel hoverable"> 
                 <a href="/countries/<%=country._id%>"><%=country.name%></a>
                 <% if (country.reviews.length > 0) { %>
                     Food: <%= countryAvgRating(country)[0] %>
@@ -18,8 +18,8 @@
                 <% } else { %>
                     No ratings yet! 
                 <% } %>
-            </li>
+            </div> 
         <% } %>
-    </ul>
+    </div> 
 </body>
 </html>

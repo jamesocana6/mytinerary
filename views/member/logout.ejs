@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partials/head.ejs")%>
+</head>
+<body>
+    <%- include("../partials/nav.ejs")%>
+    Are you sure you want to log out?
+    <a href="/trips"><button>No</button></a>
+    <form action="/member?_method=DELETE" method="POST">
+        <button>Log Out</button>
+    </form>
+</body>
+</html>

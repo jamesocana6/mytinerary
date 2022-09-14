@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "Homemade Sausage";
+    src: url("./fonts/Homemade\ Sausage.ttf");
+}
+
+
+h1 {
+    text-transform: capitalize;
+}
+
+h4 {
+    font-family: "Homemade Sausage";
+    font-size: 50px;
+}
