@@ -25,21 +25,13 @@ app.use(session({
 app.use("/user", userController);
 app.use("/member", sessionController);
 app.use(`/trips`, tripController);
-app.use(`/countries`, countryController);
+app.use(countryController);
 app.use(`/reviews`, reviewController);
 
 
 //ROUTE
 app.get("/", (req, res) => {
-	if (req.session.currentUser) {
-		res.render('dashboard.ejs', {
-			currentUser: req.session.currentUser
-		});
-	} else {
-		res.render('index.ejs', {
-			currentUser: req.session.currentUser
-		});
-	}
+    res.redirect("/home");
 });
 
 //database connection error / success

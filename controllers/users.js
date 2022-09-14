@@ -8,7 +8,9 @@ const bcrypt = require("bcrypt");
 
 //N
 userRouter.get("/new", (req, res) => {
-    res.render("./user/new.ejs");
+    res.render("./user/new.ejs", {
+        currentUser: req.session.currentUser,
+    });
 });
 
 //D

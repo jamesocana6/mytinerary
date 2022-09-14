@@ -8,12 +8,12 @@ const Country = require("../models/country.js");
 
 //ROUTES
 //I
-countryRouter.get("/", (req, res) => {
+countryRouter.get("/home", (req, res) => {
     Country.find({}, (err, allCountries) => {
         //Sort countries in alphabetical order
         allCountries = allCountries.sort((a, b) => {
-            let aFixed = a.name.toUpperCase(); 
-            let bFixed = b.name.toUpperCase(); 
+            let aFixed = a.name.toUpperCase();
+            let bFixed = b.name.toUpperCase();
             if (aFixed < bFixed) {
                 return -1;
             }
@@ -40,14 +40,18 @@ countryRouter.get("/", (req, res) => {
 //E
 
 //S
-countryRouter.get("/:id", (req, res) => {
-    Country.findById(req.params.id, (err, foundCountry) => {
+countryRouter.get("/countries/:id", (req, res) => {
+    Country.findById(req.params.id).populate("reviews").exec(function (err, country) {
+        if (err) return handleError(err);
         res.render("./country/show.ejs", {
-            country: foundCountry,
             currentUser: req.session.currentUser,
+            country,
+            reviews: country.reviews,
         });
-    });
+    })
+
 });
+
 
 
 module.exports = countryRouter;
