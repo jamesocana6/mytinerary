@@ -1,11 +1,80 @@
+/* Photos */
+/* url("https://images.pexels.com/photos/2792025/pexels-photo-2792025.jpeg") */
+/* url("https://images.pexels.com/photos/1591373/pexels-photo-1591373.jpeg") */
+/* https://images.pexels.com/photos/1010657/pexels-photo-1010657.jpeg */
+/* https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg */
+/* https://images.pexels.com/photos/2253821/pexels-photo-2253821.jpeg */
+/* https://images.pexels.com/photos/333525/pexels-photo-333525.jpeg */
+
+
 @font-face {
     font-family: "Homemade Sausage";
     src: url("./fonts/Homemade\ Sausage.ttf");
 }
 
+@font-face {
+    font-family: "Kenyan Coffee";
+    src: url("./fonts/kenyan\ coffee\ rg.ttf");
+}
 
-h1 {
-    text-transform: capitalize;
+@font-face {
+    font-family: "Lemon Milk";
+    src: url("./fonts/LEMONMILK-Regular.otf");
+}
+
+@font-face {
+    font-family: "Dream Orphan";
+    src: url("./fonts/dream\ orphans\ bd.otf");
+}
+
+body {
+    background-image: url("https://images.pexels.com/photos/2792025/pexels-photo-2792025.jpeg");
+    background-position: center;
+    background-repeat: repeat;
+    background-size: cover;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+footer.page-footer {
+    padding: 0px;
+    height: 25px;
+}
+
+a.footer {
+    padding: 5px;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.brand-logo {
+    margin-left: 15px;
+    font-family: "Kenyan Coffee";
+}
+
+nav {
+    font-family: "Lemon Milk";
+}
+
+div.content {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: max-content;
+    background-color: white;
+    opacity: 90%;
+}
+
+div.card-panel {
+    justify-self: center;
+}
+
+h3 {
+    font-family: "Dream Orphan";
+    font-size: 40px;
+    margin-left: 15px;
 }
 
 h4 {

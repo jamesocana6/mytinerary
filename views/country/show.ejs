@@ -5,23 +5,27 @@
 </head>
 <body>
     <%- include("../partials/nav.ejs")%>
-    <h1><%=country.name%></h1>
-    <h2>Number of Visits: <%=country.numberOfVisits%></h2>
-    <% if (country.reviews.length > 0) { %>
-        Food: <%= countryAvgRating(country)[0] %>
-        Sights: <%= countryAvgRating(country)[1] %>
-        Worth: <%= countryAvgRating(country)[2] %>
-        Overall: <%= countryAvgRating(country)[3] %>
-    <% } %>
-    <% for (let review of reviews) { %>
-        <div>
-            <% if (review.anonymous) { %>
-                Anonymous
-            <% } else { %>
-                <%= review.username %>
+    <div class="container left-align content">
+        <h3><%=country.name%></h3>
+        <div class="container">
+            Number of Visits: <%=numVisits%> <br>
+            <% if (country.reviews.length > 0) { %>
+                Food: <%= countryAvgRating(country)[0] %> <br>
+                Sights: <%= countryAvgRating(country)[1] %> <br>
+                Worth: <%= countryAvgRating(country)[2] %> <br>
+                Overall: <%= countryAvgRating(country)[3] %> <br>
             <% } %>
-            <%= review.comment %>
         </div>
-    <% } %>
+        <% for (let review of reviews) { %>
+            <div class="card-panel">
+                <% if (review.anonymous) { %>
+                    Anonymous
+                <% } else { %>
+                    <%= review.username %>
+                <% } %>
+                <%= review.comment %>
+            </div>
+        <% } %>
+    </div>
 </body>
 </html>

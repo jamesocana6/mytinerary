@@ -1,11 +1,16 @@
-<nav class="indigo lighten-2">
-	<% if(currentUser) { %>
-        <a href="/home">Home</a>
-		<a href="/trips">My Trips</a>
-		<a href="/member/logout">Log Out</a>
-        <% } else { %>
-        <a href="/home">Home</a>
-		<a href="/user/new">Register</a>
-		<a href="/member/login">Log In</a>
-	<% } %>
-</nav>
+<nav class="container blue lighten-2">
+    <div class="nav-wrapper">
+      <a href="/home" class="brand-logo left">MyTinerary</a>
+      <ul id="nav-mobile" class="right">
+        <% if(currentUser) { %>
+			<li><a href="/home">Home</a></li>
+			<li><a href="/trips">My Trips</a></li>
+			<li><a href="/member/logout">Log Out</a></li>
+			<% } else { %>
+			<li><a href="/home">Home</a></li>
+			<li><a href="/user/new">Register</a></li>
+			<li><a href="/member/login">Log In</a></li>
+		<% } %>
+      </ul>
+    </div>
+  </nav>

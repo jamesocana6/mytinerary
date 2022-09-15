@@ -42,14 +42,37 @@ countryRouter.get("/home", (req, res) => {
 //S
 countryRouter.get("/countries/:id", (req, res) => {
     Country.findById(req.params.id).populate("reviews").exec(function (err, country) {
-        res.render("./country/show.ejs", {
-            currentUser: req.session.currentUser,
-            country,
-            reviews: country.reviews,
-            countryAvgRating,
-        });
+        User.find({country: country.name}, (err, users) => {
+            let numVisits = numberOfVisits(users, country);
+            res.render("./country/show.ejs", {
+                currentUser: req.session.currentUser,
+                country,
+                reviews: country.reviews,
+                countryAvgRating,
+                users,
+                numVisits,
+            });
+        })
     })
 });
+
+function numberOfVisits(users, country) {
+    if (users.length > 0) {
+        let numOfVisits = 0; 
+        for (let user of users) {
+            console.log(user)
+            console.log(user.trips)
+            for (const trip of user.trips) {
+                if (trip.country === country.name) {
+                    numOfVisits += 1;
+                }
+            }
+        }
+        return numOfVisits;
+    } else {
+        return 0;
+    }
+}
 
 function countryAvgRating(country) {
     let avgFoodArr = [];

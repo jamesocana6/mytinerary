@@ -6,6 +6,7 @@
 <body>
     <%- include("./partials/nav.ejs")%>
     <h1><%= currentUser.username %>'s Trips</h1>
+    
     <a href="/trips/new">Add New Trip</a>
     <div class="container center-align hoverable">
         <% for (let trip of tripsArr) { %>
