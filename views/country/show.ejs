@@ -10,10 +10,53 @@
         <div class="container">
             Number of Visits: <%=numVisits%> <br>
             <% if (country.reviews.length > 0) { %>
-                Food: <%= countryAvgRating(country)[0] %> <br>
-                Sights: <%= countryAvgRating(country)[1] %> <br>
-                Worth: <%= countryAvgRating(country)[2] %> <br>
-                Overall: <%= countryAvgRating(country)[3] %> <br>
+                Food: 
+                <% for (let i = 0; i < ratLow[0] ; i++ ) { %>
+                    <i class="material-icons">star</i>
+                <% } %>
+                <% if ((ratHigh[0] - ratLow[0]) === 1) { %>
+                    <i class="material-icons">star_half</i>
+                <% } %>
+                <% for (let i = 0; i < (5-ratHigh[0]); i++ ) { %>
+                    <i class="material-icons">star_border</i>
+                <% } %>
+                <br>
+
+                Sights: 
+                <% for (let i = 0; i < ratLow[1] ; i++ ) { %>
+                    <i class="material-icons">star</i>
+                <% } %>
+                <% if ((ratHigh[1] - ratLow[1]) === 1) { %>
+                    <i class="material-icons">star_half</i>
+                <% } %>
+                <% for (let i = 0; i < (5-ratHigh[1]); i++ ) { %>
+                    <i class="material-icons">star_border</i>
+                <% } %>
+                <br>
+
+                Worth: 
+                <% for (let i = 0; i < ratLow[2] ; i++ ) { %>
+                    <i class="material-icons">star</i>
+                <% } %>
+                <% if ((ratHigh[2] - ratLow[2]) === 1) { %>
+                    <i class="material-icons">star_half</i>
+                <% } %>
+                <% for (let i = 0; i < (5-ratHigh[2]); i++ ) { %>
+                    <i class="material-icons">star_border</i>
+                <% } %>
+                <br>
+
+                Overall: 
+                <% for (let i = 0; i < ratLow[3] ; i++ ) { %>
+                    <i class="material-icons">star</i>
+                <% } %>
+                <% if ((ratHigh[3] - ratLow[3]) === 1) { %>
+                    <i class="material-icons">star_half</i>
+                <% } %>
+                <% for (let i = 0; i < (5-ratHigh[3]); i++ ) { %>
+                    <i class="material-icons">star_border</i>
+                <% } %>
+                <br>
             <% } %>
         </div>
         <% for (let review of reviews) { %>

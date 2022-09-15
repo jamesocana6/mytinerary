@@ -25,6 +25,8 @@ countryRouter.get("/home", (req, res) => {
             countries: allCountries,
             currentUser: req.session.currentUser,
             countryAvgRating,
+            ratHigh,
+            ratLow,
         });
     });
 });
@@ -51,17 +53,21 @@ countryRouter.get("/countries/:id", (req, res) => {
                 countryAvgRating,
                 users,
                 numVisits,
+                ratHigh: ratHigh(countryAvgRating(country)),
+                ratLow: ratLow(countryAvgRating(country)),
             });
         })
     })
 });
 
+
+
+
+//FUNCTIONS
 function numberOfVisits(users, country) {
     if (users.length > 0) {
         let numOfVisits = 0; 
         for (let user of users) {
-            console.log(user)
-            console.log(user.trips)
             for (const trip of user.trips) {
                 if (trip.country === country.name) {
                     numOfVisits += 1;
@@ -75,33 +81,61 @@ function numberOfVisits(users, country) {
 }
 
 function countryAvgRating(country) {
-    let avgFoodArr = [];
-    let avgSightsArr = [];
-    let avgWorthArr = [];
-    let avgOverallArr = [];
-    for (let review of country.reviews) {
-        for (let i = 0; i < 4 ; i++ ) {
-            switch (i) {
-                case 0:
-                    avgFoodArr.push(review.rating.food);
-                    break;
-                case 1:
-                    avgSightsArr.push(review.rating.sights);
-                    break;
-                case 2:
-                    avgWorthArr.push(review.rating.worth);
-                    break;
-                case 3:
-                    avgOverallArr.push(review.rating.overall);
-                    break;
+    if (country.reviews.length > 0) {
+        let avgFoodArr = [];
+        let avgSightsArr = [];
+        let avgWorthArr = [];
+        let avgOverallArr = [];
+        for (let review of country.reviews) {
+            for (let i = 0; i < 4 ; i++ ) {
+                switch (i) {
+                    case 0:
+                        avgFoodArr.push(review.rating.food);
+                        break;
+                    case 1:
+                        avgSightsArr.push(review.rating.sights);
+                        break;
+                    case 2:
+                        avgWorthArr.push(review.rating.worth);
+                        break;
+                    case 3:
+                        avgOverallArr.push(review.rating.overall);
+                        break;
+                }
             }
         }
+        let avgFood = Number.parseFloat((avgFoodArr.reduce((a,b) => a+b ) / avgFoodArr.length).toFixed(2));
+        let avgSights = Number.parseFloat((avgSightsArr.reduce((a,b) => a+b ) / avgFoodArr.length).toFixed(2));
+        let avgWorth = Number.parseFloat((avgWorthArr.reduce((a,b) => a+b ) / avgFoodArr.length).toFixed(2));
+        let avgOverall = Number.parseFloat((avgOverallArr.reduce((a,b) => a+b ) / avgFoodArr.length).toFixed(2));
+        return [avgFood, avgSights, avgWorth, avgOverall];
+    } else {
+        return [0, 0, 0, 0]
     }
-    let avgFood = (avgFoodArr.reduce((a,b) => a+b ) / avgFoodArr.length).toFixed(2);
-    let avgSights = (avgSightsArr.reduce((a,b) => a+b ) / avgFoodArr.length).toFixed(2);
-    let avgWorth = (avgWorthArr.reduce((a,b) => a+b ) / avgFoodArr.length).toFixed(2);
-    let avgOverall = (avgOverallArr.reduce((a,b) => a+b ) / avgFoodArr.length).toFixed(2);
-    return [avgFood, avgSights, avgWorth, avgOverall];
+}
+
+function ratHigh(rating) {
+    if (rating.length > 0) {
+        let ratingHigh = [];
+        for (let i  = 0; i < rating.length; i++) {
+            ratingHigh.push(Math.ceil(rating[i]));
+        }
+        return ratingHigh;
+    } else {
+        return [0, 0, 0, 0];
+    }
+}
+
+function ratLow(rating) {
+    if (rating.length > 0) {
+        let ratingLow = [];
+        for (let i  = 0; i < rating.length; i++) {
+            ratingLow.push(Math.floor(rating[i]));
+        }
+        return ratingLow;
+    } else {
+        return [0, 0, 0, 0];
+    }
 }
 
 module.exports = countryRouter;

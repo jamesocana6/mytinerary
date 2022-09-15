@@ -17,6 +17,10 @@
                             <%=country.name%>
                         </a>
                         <% if (country.reviews.length> 0) { %>
+                            Food: <i class="materials-icon">star</i>
+                            <% for (let i = 0; i < ratLow(countryAvgRating(country)).length ; i++ ) { %>
+                                <i class="star"></i>
+                            <% } %>
                                 Food: <%= countryAvgRating(country)[0] %>
                                 Sights: <%= countryAvgRating(country)[1] %>
                                 Worth: <%= countryAvgRating(country)[2] %>
