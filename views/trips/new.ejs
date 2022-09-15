@@ -1,3 +1,12 @@
+<style>
+    body {
+        background-image: url("https://images.pexels.com/photos/1010657/pexels-photo-1010657.jpeg");
+        background-position: center;
+        background-repeat: repeat;
+        background-size: cover;
+    }
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,23 +14,35 @@
 </head>
 <body>
     <%- include("../partials/nav.ejs")%>
-    <h1>Add a Trip</h1>
-    <form action="/trips" method="POST">
-        Name: <input type="text" name="name"><br>
-        Country: <input type="text" name="country" list="country"><br>
-            <datalist id="country">
-                <%for (let country of countryNames) { %>
-                    <option>
-                        <%=country.name%>
-                    </option>
-                <% } %>
-            </datalist>
-        Date: <input type="date" name="date"><br>
-        Length of Trip (in Days): <input type="number" name="lengthOfTrip" min="0"><br>
-        Number of People: <input type="number" name="numberOfPeople" min="1"><br>
-        Total Cost: <input type="number" name="totalCost" min="0"><br>
-        Notable Places: <input type="text" name="placesVisited"><br>
-        <button>New Trip</button>
-    </form>
+    <main>
+        <div class="container content">
+            <div class="row tripStyle">
+                <a href="/trips/">Back</a>
+                <div class="col s12">
+                    <h3 style="font-size: 50px;">Add a Trip</h3>
+                </div>
+            </div>
+            <div style="font-size: medium;" class="row tripStyle">
+                <form action="/trips" method="POST">
+                    Name: <input type="text" name="name"><br>
+                    Country: <input type="text" name="country" list="country"><br>
+                        <datalist id="country">
+                            <%for (let country of countryNames) { %>
+                                <option>
+                                    <%=country.name%>
+                                </option>
+                            <% } %>
+                        </datalist>
+                    Date: <input type="date" name="date"><br>
+                    Length of Trip (in Days): <input type="number" name="lengthOfTrip" min="0"><br>
+                    Number of People: <input type="number" name="numberOfPeople" min="1"><br>
+                    Total Cost (in USD): <input type="number" name="totalCost" min="0"><br>
+                    Notable Places: <textarea name="placesVisited"></textarea><br>
+                    <button style="margin-top: 10px;" class="btn">New Trip</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <%- include("../partials/footer.ejs")%>
 </body>
 </html>

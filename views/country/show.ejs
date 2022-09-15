@@ -15,11 +15,14 @@
 <body>
     <%- include("../partials/nav.ejs")%>
     <div class="container left-align content">
-        <h3><%=country.name%></h3>
-        <div class="container">
+        <a style="margin-left: 20px;" href="/home">Back</a>
+        <div class="row tripStyle">
+            <h3><%=country.name%></h3>
             <h5>Number of Visits: <%=numVisits%></h5> <br>
+        </div>
+        <div class="row tripStyle">
             <% if (country.reviews.length > 0) { %>
-                <div class="container">
+                <div class="row tripStyle">
                 Overall: 
                 <% for (let i = 0; i < ratLow[3] ; i++ ) { %>
                     <i class="material-icons">star</i>

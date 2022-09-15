@@ -30,11 +30,12 @@
                 <div class="row tripStyle">
                     <div class="col s5 tripInfo">
                         Number of People: <%= trip.numberOfPeople%> <br>
-                        Total Cost: $<%= trip.totalCost%> <br>
+                        Total Cost (in USD): $<%= trip.totalCost%> <br>
                         Length of Trip (in Days): <%= trip.lengthOfTrip%> <br>
                     </div>
                     <div class="col s7 tripInfo">
-                        Notable Places: <h5><%= trip.placesVisited%></h5>
+                        Notable Places: <br>
+                        <%= trip.placesVisited%>
                     </div>
                 </div>
                 <!-- INSERT REVIEW OF THE TRIP IF REVIEW IS MADE -->
@@ -106,7 +107,7 @@
                         </div>
                     </div>
                 <% } else { %>
-                    <a class="btn-small" href="/reviews/<%=trip._id%>/new"><button>Add Review</button></a>
+                    <a class="btn-small tripStyle" href="/reviews/<%=trip._id%>/new">Add Review</a>
                 <% } %>
         </div>
     </main>

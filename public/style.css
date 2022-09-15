@@ -72,7 +72,6 @@ div.card-panel {
 h3 {
     font-family: "Dream Orphan";
     font-size: 40px;
-    margin-left: 15px;
 }
 
 h4 {
@@ -146,4 +145,10 @@ footer.footer {
 .tripStyle {
     margin-left: 20px;
     margin-right: 20px;
+}
+
+input[type=text]:not(.browser-default), 
+input[type=date]:not(.browser-default),
+input[type=number]:not(.browser-default) {
+    height: 2.5rem;
 }
