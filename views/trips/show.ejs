@@ -1,3 +1,13 @@
+<style>
+    body {
+        background-image: url("https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg");
+        background-position: center;
+        background-repeat: repeat;
+        background-size: cover;
+    }
+</style>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,26 +15,101 @@
 </head>
 <body>
     <%- include("../partials/nav.ejs")%>
-    <a href="/trips/<%=trip._id%>/edit"><button>Edit Trip</button></a>
-    <h1><%= trip.name %></h1>
-    <h2><%= trip.date%></h2>
-    <a href="/countries/<%=foundCountry._id%>"><h2><%= trip.country%></h2></a>
-    Number of people: <h2><%= trip.numberOfPeople%></h2>
-    Total Cost: <h2>$<%= trip.totalCost%></h2>
-    Length of Trip (in Days): <h2><%= trip.lengthOfTrip%></h2>
-    <!-- INSERT REVIEW OF THE TRIP IF REVIEW IS MADE -->
-    <% if (trip.review) { %>
-        <h2>Food: <%= foundReview.rating.food %></h2>
-        <h2>Sights: <%= foundReview.rating.sights %></h2>
-        <h2>Worth: <%= foundReview.rating.worth %></h2>
-        <h2>Overall Experience: <%= foundReview.rating.overall %></h2>
-        <h2><%= foundReview.comment %></h2>
-        <a href="/reviews/<%=trip._id%>/edit"><button>Edit Review</button></a>
-        <form action="/reviews/<%=trip._id%>?_method=DELETE" method="POST">
-            <button>X</button>
-        </form>
-    <% } else { %>
-        <a href="/reviews/<%=trip._id%>/new"><button>Add a Review</button></a>
-    <% } %>
+    <main>
+        <div class="container left-align content">
+            <a style="margin-left: 20px; padding: 10px;" href="/trips/<%=trip._id%>/edit"><i class="material-icons">edit</i></a>
+                <div class="row tripStyle">
+                    <div class="col s10">
+                        <h3 style="font-size: 50px; margin-left: 0; margin-top: 10px;"><%= trip.name %></h3>
+                        <a href="/countries/<%=foundCountry._id%>"><h4 style="font-size: 30px;"><%= trip.country%></h4></a>
+                    </div>
+                    <div style="font-weight: bold; padding: 0;" class="col s2">
+                        <%= trip.date%>
+                    </div>
+                </div>
+                <div class="row tripStyle">
+                    <div class="col s5 tripInfo">
+                        Number of People: <%= trip.numberOfPeople%> <br>
+                        Total Cost: $<%= trip.totalCost%> <br>
+                        Length of Trip (in Days): <%= trip.lengthOfTrip%> <br>
+                    </div>
+                    <div class="col s7 tripInfo">
+                        Notable Places: <h5><%= trip.placesVisited%></h5>
+                    </div>
+                </div>
+                <!-- INSERT REVIEW OF THE TRIP IF REVIEW IS MADE -->
+                <% if (trip.review) { %>
+                        <div class="row tripStyle">
+                            <div class="col s6 left-align">
+                                <a class="btn-small" href="/reviews/<%=trip._id%>/edit">Edit Review</a>
+                            </div>
+                            <div class="col s6 right-align">
+                                <form action="/reviews/<%=trip._id%>?_method=DELETE" method="POST">
+                                    <button class="btn-small red lighten-2">Delete Review</button>
+                                </form>
+                            </div>
+                        </div>
+                    <div class="row tripStyle tripRatings">
+                        <div class="col s12">
+                            Overall: 
+                            <% for (let i = 0; i < Math.floor(foundReview.rating.overall) ; i++ ) { %>
+                                <i class="material-icons ratingStarTrip">star</i>
+                            <% } %>
+                            <% if ((Math.ceil(foundReview.rating.overall) - Math.floor(foundReview.rating.overall)) === 1) { %>
+                                <i class="material-icons ratingStarTrip">star_half</i>
+                            <% } %>
+                            <% for (let i = 0; i < (5-Math.ceil(foundReview.rating.overall)); i++ ) { %>
+                                <i class="material-icons ratingStarTrip">star_border</i>
+                            <% } %>
+                            &nbsp;
+                            &nbsp;
+        
+                            Food: 
+                            <% for (let i = 0; i < Math.floor(foundReview.rating.food) ; i++ ) { %>
+                                <i class="material-icons ratingStarTrip">star</i>
+                            <% } %>
+                            <% if ((Math.ceil(foundReview.rating.food) - Math.floor(foundReview.rating.food)) === 1) { %>
+                                <i class="material-icons ratingStarTrip">star_half</i>
+                            <% } %>
+                            <% for (let i = 0; i < (5-Math.ceil(foundReview.rating.food)); i++ ) { %>
+                                <i class="material-icons ratingStarTrip">star_border</i>
+                            <% } %>
+                            &nbsp;
+                            &nbsp;
+        
+                            Sights: 
+                            <% for (let i = 0; i < Math.floor(foundReview.rating.sights) ; i++ ) { %>
+                                <i class="material-icons ratingStarTrip">star</i>
+                            <% } %>
+                            <% if ((Math.ceil(foundReview.rating.sights) - Math.floor(foundReview.rating.sights)) === 1) { %>
+                                <i class="material-icons ratingStarTrip">star_half</i>
+                            <% } %>
+                            <% for (let i = 0; i < (5-Math.ceil(foundReview.rating.sights)); i++ ) { %>
+                                <i class="material-icons ratingStarTrip">star_border</i>
+                            <% } %>
+                            &nbsp;
+                            &nbsp;
+        
+                            Worth: 
+                            <% for (let i = 0; i < Math.floor(foundReview.rating.worth) ; i++ ) { %>
+                                <i class="material-icons ratingStarTrip">star</i>
+                            <% } %>
+                            <% if ((Math.ceil(foundReview.rating.worth) - Math.floor(foundReview.rating.worth)) === 1) { %>
+                                <i class="material-icons ratingStarTrip">star_half</i>
+                            <% } %>
+                            <% for (let i = 0; i < (5-Math.ceil(foundReview.rating.worth)); i++ ) { %>
+                                <i class="material-icons ratingStarTrip">star_border</i>
+                            <% } %>
+                            <br>
+                            Comments: <br>
+                            <%= foundReview.comment %>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <a class="btn-small" href="/reviews/<%=trip._id%>/new"><button>Add Review</button></a>
+                <% } %>
+        </div>
+    </main>
+    <%- include("../partials/footer.ejs")%>
 </body>
 </html>
