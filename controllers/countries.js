@@ -44,6 +44,7 @@ countryRouter.get("/home", (req, res) => {
 //S
 countryRouter.get("/countries/:id", (req, res) => {
     Country.findById(req.params.id).populate("reviews").exec(function (err, country) {
+        //Find users with trips with country name === country page
         User.find({country: country.name}, (err, users) => {
             let numVisits = numberOfVisits(users, country);
             res.render("./country/show.ejs", {

@@ -78,6 +78,13 @@ reviewRouter.put("/:id", (req, res) => {
                 trip.review = foundReview._id;
                 //add review id to country 
                 Country.findOne({ "name": trip.country}, (err, foundCountry) => {
+                    let testarray = [];
+                    //Turn array of objects to strings
+                    for (const objId of foundCountry.reviews) {
+                        testarray.push(objId.toString());
+                    }
+                    let indexReview = testarray.indexOf(foundReview._id.toString())
+                    foundCountry.reviews.splice(indexReview, 1);
                     foundCountry.reviews.push(foundReview._id);
                     foundCountry.save();
                 })

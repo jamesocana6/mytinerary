@@ -1,3 +1,12 @@
+<style>
+    body {
+        background-image: url("https://images.pexels.com/photos/1591373/pexels-photo-1591373.jpeg");
+        background-position: center;
+        background-repeat: repeat;
+        background-size: cover;
+    }
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,20 +14,53 @@
 </head>
 <body>
     <%- include("../partials/nav.ejs")%>
-    <h1>Trip Review</h1>
-    <h2><%=trip.name%></h2>
-    <h2><%=trip.country%></h2>
-    <h2><%=trip.date%></h2>
-    <h2><%=trip.totalCost%></h2>
-    <form action="/reviews/<%=trip._id%>" method="POST">
-        Ratings: <br>
-            Food (0-5) <input type="range" name="rating.food" id="rating[food]" min="0" max="5"><br>
-            Sights (0-5) <input type="range" name="rating.sights" id="rating[sights]" min="0" max="5"><br>
-            Worth (0-5) <input type="range" name="rating.worth" id="rating[worth]" min="0" max="5"><br>
-            Overall (0-5) <input type="range" name="rating.overall" id="rating[overall]" min="0" max="5"><br>
-            Comments: <textarea name="comment" id="comment" style="min-width: 500px; min-height: 50px;"></textarea><br>
-            Would you like this review to be anonymous? <input type="checkbox" name="anonymous" id="anonymous"><br>
-        <button>Add Review</button>
-    </form>
+    <main>
+        <div class="container left-align content">
+            <a style="margin-left: 20px;" href="/trips/<%=trip._id%>">Back</a>
+            <div class="row tripStyle">
+                <div class="col s10">
+                    <h3 style="font-size: 50px; margin-left: 0; margin-top: 10px;"><%= trip.name %></h3>
+                    <a href="/countries/<%=foundCountry._id%>"><h4 style="font-size: 30px;"><%= trip.country%></h4></a>
+                </div>
+                <div style="font-weight: bold; padding: 0;" class="col s2">
+                    <%= trip.date%>
+                </div>
+            </div>
+            <div class="row tripStyle">
+                <div class="col s5 tripInfo">
+                    Number of People: <%= trip.numberOfPeople%> <br>
+                    Total Cost (in USD): $<%= trip.totalCost%> <br>
+                    Length of Trip (in Days): <%= trip.lengthOfTrip%> <br>
+                </div>
+                <div class="col s7 tripInfo">
+                    Notable Places: <br>
+                    <%= trip.placesVisited%>
+                </div>
+            </div>
+            <div class="row tripStyle">
+                <div class="col s12">
+                    <form action="/reviews/<%=trip._id%>" method="POST">
+                        <b>Ratings:</b> <br>
+                            Overall (0-5): <output id="overall" name="overall" for="rating.overall">3</output> <br> <input type="range" name="rating.overall" id="rating.overall" min="0" max="5" step=".5" oninput="overall.value = this.value">  <br>
+                            Food (0-5): <output id="food" name="food" for="rating.food">3</output> <br> <input type="range" name="rating.food" id="rating.food" min="0" max="5" step=".5" oninput="food.value = this.value"> <br>
+                            Sights (0-5): <output id="sights" name="sights" for="rating.sights">3</output> <br> <input type="range" name="rating.sights" id="rating[sights]" min="0" max="5" step=".5" oninput="sights.value = this.value">  <br>
+                            Worth (0-5): <output id="worth" name="worth" for="rating.worth">3</output> <br> <input type="range" name="rating.worth" id="rating[worth]" min="0" max="5" step=".5" oninput="worth.value = this.value"> <br>
+                            Comments: <textarea style="margin-bottom: 10px" name="comment" id="comment" style="min-width: 500px; min-height: 50px;"></textarea><br>
+                            <div class="row">
+                                <div class="col s12">
+                                    Would you like this review to be anonymous?
+                                        <label>
+                                          <input type="checkbox" name="anonymous"/>
+                                          <span></span>
+                                        </label><br>
+                                </div>
+                            </div>
+                        <button class="btn-small">Add Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include("../partials/footer.ejs")%>
 </body>
 </html>
