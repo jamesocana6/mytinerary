@@ -45,21 +45,7 @@ tripRouter.delete("/:id", (req, res) => {
             let tripIndex = foundUser.trips.findIndex(trip => trip._id == req.params.id);
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
             if (trip.review) {
-                Review.findByIdAndDelete(trip.review, req.body, (err, foundReview) => {
-                    trip.review = undefined;
-                    Country.findOne({ "name": trip.country }, (err, foundCountry) => {
-                        //Need to make a deep clone to be able to use the findIndex function.
-                        let testarray = [];
-                        //Turn array of objects to strings
-                        for (const objId of foundCountry.reviews) {
-                            testarray.push(objId.toString());
-                        }
-                        //splice index of string from the array of object ids
-                        let indexReview = testarray.indexOf(foundReview._id.toString())
-                        foundCountry.reviews.splice(indexReview, 1);
-                        foundCountry.save();
-                    })
-                });
+                deleteReview(trip);
             }
             foundUser.trips.splice(tripIndex, 1);
             foundUser.save(err => {
@@ -78,6 +64,7 @@ tripRouter.put("/:id", (req, res) => {
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
             //get the trip with the correct id
             let tripIndex = foundUser.trips.findIndex(trip => trip._id == req.params.id);
+            //if the country is not already a document saved in the DB create it
             Country.findOne({ "name": req.body.country }, (err, foundCountry) => {
                 if (!foundCountry) {
                     Country.create({
@@ -86,21 +73,7 @@ tripRouter.put("/:id", (req, res) => {
                     })
                 }
             })
-            Review.findByIdAndDelete(trip.review, req.body, (err, foundReview) => {
-                trip.review = undefined;
-                Country.findOne({ "name": trip.country }, (err, foundCountry) => {
-                    //Need to make a deep clone to be able to use the findIndex function.
-                    let testarray = [];
-                    //Turn array of objects to strings
-                    for (const objId of foundCountry.reviews) {
-                        testarray.push(objId.toString());
-                    }
-                    //splice index of string from the array of object ids
-                    let indexReview = testarray.indexOf(foundReview._id.toString())
-                    foundCountry.reviews.splice(indexReview, 1);
-                    foundCountry.save();
-                })
-            });
+            deleteReview(trip);
             foundUser.trips[tripIndex] = req.body;
             foundUser.save(err => {
                 res.redirect(`/trips/${foundUser.trips[tripIndex]._id}`)
@@ -157,6 +130,7 @@ tripRouter.get("/:id/edit", (req, res) => {
 //S
 tripRouter.get("/:id", (req, res) => {
     if (req.session.currentUser) {
+        let today = getDate();
         User.findOne({ "_id": req.session.currentUser._id }, (err, foundUser) => {
             //get the trip with the correct id
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
@@ -168,6 +142,7 @@ tripRouter.get("/:id", (req, res) => {
                         trip,
                         foundCountry,
                         foundReview,
+                        today,
                     });
                 });
             });
@@ -177,5 +152,37 @@ tripRouter.get("/:id", (req, res) => {
     }
 });
 
+
+function deleteReview (trip) {
+    Review.findByIdAndDelete(trip.review, (err, foundReview) => {
+        trip.review = undefined;
+        Country.findOne({ "name": trip.country }, (err, foundCountry) => {
+            //Need to make a deep clone to be able to use the findIndex function.
+            let testarray = [];
+            //Turn array of objects to strings
+            for (const objId of foundCountry.reviews) {
+                testarray.push(objId.toString());
+            }
+            //splice index of string from the array of object ids
+            let indexReview = testarray.indexOf(foundReview._id.toString())
+            foundCountry.reviews.splice(indexReview, 1);
+            foundCountry.save();
+        })
+    });
+}
+
+function getDate() {
+    let year = new Date().getFullYear().toString();
+    let month = new Date().getMonth()+1;
+    if (month < 10) {
+        month = "0"+month;
+    }
+    let day = new Date().getDate().toString();
+    if (day < 10 ) {
+        day = "0"+day;
+    }
+    let today = year+month+day;
+    return today;
+}
 
 module.exports = tripRouter;

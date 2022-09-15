@@ -7,7 +7,6 @@
     }
 </style>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +16,7 @@
     <%- include("../partials/nav.ejs")%>
     <main>
         <div class="container left-align content">
-            <a style="margin-left: 20px;" href="/trips/">Back</a> <br>
+            <a style="margin-left: 20px; margin-bottom: 7px;" href="/trips/">Back</a> <br>
             <a style="margin-left: 20px; padding: 10px;" href="/trips/<%=trip._id%>/edit"><i class="material-icons">edit</i></a>
                 <div class="row tripStyle">
                     <div class="col s10">
@@ -32,7 +31,7 @@
                     <div class="col s5 tripInfo">
                         Number of People: <%= trip.numberOfPeople%> <br>
                         Total Cost (in USD): $<%= trip.totalCost%> <br>
-                        Length of Trip (in Days): <%= trip.lengthOfTrip%> <br>
+                        Length of Trip (in Days): <%= trip.lengthOfTrip %> <br>
                     </div>
                     <div class="col s7 tripInfo">
                         Notable Places: <br>
@@ -108,7 +107,11 @@
                         </div>
                     </div>
                 <% } else { %>
-                    <a class="btn-small tripStyle" href="/reviews/<%=trip._id%>/new">Add Review</a>
+                    <% if (Number.parseInt(trip.date.replaceAll("-","")+trip.lengthOfTrip ) < Number.parseInt(today)) { %>
+                        <a class="btn-small tripStyle" href="/reviews/<%=trip._id%>/new">Add Review</a>
+                    <% } else { %>
+                        <b style="margin-left: 20px;">Enjoy your trip! Please add a review of the trip when it is complete!</b>
+                    <% } %>
                 <% } %>
         </div>
     </main>

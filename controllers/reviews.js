@@ -36,7 +36,7 @@ reviewRouter.delete("/:id", (req, res) => {
             //add review id to trip 
             //get the trip with the correct id
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
-            Review.findByIdAndDelete(trip.review, req.body, (err, foundReview) => {
+            Review.findByIdAndDelete(trip.review, (err, foundReview) => {
                 trip.review = undefined;
                 Country.findOne({ "name": trip.country }, (err, foundCountry) => {
                     //Need to make a deep clone to be able to use the findIndex function.
@@ -154,6 +154,5 @@ reviewRouter.get("/:id/edit", (req, res) => {
 });
 
 //S
-
 
 module.exports = reviewRouter;
