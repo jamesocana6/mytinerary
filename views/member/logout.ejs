@@ -1,3 +1,12 @@
+<style>
+    body {
+        background-image: url("https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg");
+        background-position: center;
+        background-repeat: repeat;
+        background-size: cover;
+    }
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,10 +14,17 @@
 </head>
 <body>
     <%- include("../partials/nav.ejs")%>
-    Are you sure you want to log out?
-    <a href="/trips"><button>No</button></a>
-    <form action="/member?_method=DELETE" method="POST">
-        <button>Log Out</button>
-    </form>
+    <main>
+        <div class="container center-align content">
+            <h3>Are you sure you want to log out?</h3>
+            <div class="container logoutButtons">
+                <a href="/trips" class="waves-effect waves-light btn">Stay</a>
+                <form action="/member?_method=DELETE" method="POST">
+                    <button class="btn waves-effect waves-light red lighten-2" type="submit" name="action">Log Out</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <%- include("../partials/footer.ejs")%>
 </body>
 </html>
