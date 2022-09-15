@@ -164,3 +164,7 @@ input[type=range]:not(.browser-default) {
     width: 30%;
     margin-left: 50px;
 }
+
+.ratingCountryShow {
+    align-items: center;
+}

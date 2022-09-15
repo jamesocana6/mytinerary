@@ -44,9 +44,7 @@ tripRouter.delete("/:id", (req, res) => {
             //get the trip with the correct id
             let tripIndex = foundUser.trips.findIndex(trip => trip._id == req.params.id);
             let trip = foundUser.trips.find(trip => trip._id == req.params.id);
-            if (trip.review) {
-                deleteReview(trip);
-            }
+            deleteReview(trip);
             foundUser.trips.splice(tripIndex, 1);
             foundUser.save(err => {
                 res.redirect("/trips");
@@ -154,21 +152,23 @@ tripRouter.get("/:id", (req, res) => {
 
 
 function deleteReview (trip) {
-    Review.findByIdAndDelete(trip.review, (err, foundReview) => {
-        trip.review = undefined;
-        Country.findOne({ "name": trip.country }, (err, foundCountry) => {
-            //Need to make a deep clone to be able to use the findIndex function.
-            let testarray = [];
-            //Turn array of objects to strings
-            for (const objId of foundCountry.reviews) {
-                testarray.push(objId.toString());
-            }
-            //splice index of string from the array of object ids
-            let indexReview = testarray.indexOf(foundReview._id.toString())
-            foundCountry.reviews.splice(indexReview, 1);
-            foundCountry.save();
-        })
-    });
+    if (trip.review) {
+        Review.findByIdAndDelete(trip.review, (err, foundReview) => {
+            trip.review = undefined;
+            Country.findOne({ "name": trip.country }, (err, foundCountry) => {
+                //Need to make a deep clone to be able to use the findIndex function.
+                let testarray = [];
+                //Turn array of objects to strings
+                for (const objId of foundCountry.reviews) {
+                    testarray.push(objId.toString());
+                }
+                //splice index of string from the array of object ids
+                let indexReview = testarray.indexOf(foundReview._id.toString())
+                foundCountry.reviews.splice(indexReview, 1);
+                foundCountry.save();
+            })
+        });
+    }
 }
 
 function getDate() {

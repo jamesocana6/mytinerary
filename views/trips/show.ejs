@@ -107,7 +107,7 @@
                         </div>
                     </div>
                 <% } else { %>
-                    <% if (Number.parseInt(trip.date.replaceAll("-","")+trip.lengthOfTrip ) < Number.parseInt(today)) { %>
+                    <% if ((Number.parseInt(trip.date.replaceAll("-",""))+trip.lengthOfTrip ) <= Number.parseInt(today)) { %>
                         <a class="btn-small tripStyle" href="/reviews/<%=trip._id%>/new">Add Review</a>
                     <% } else { %>
                         <b style="margin-left: 20px;">Enjoy your trip! Please add a review of the trip when it is complete!</b>
