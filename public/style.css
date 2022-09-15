@@ -5,7 +5,8 @@
 /* https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg */
 /* https://images.pexels.com/photos/2253821/pexels-photo-2253821.jpeg */
 /* https://images.pexels.com/photos/333525/pexels-photo-333525.jpeg */
-
+/* LOG OUT */
+/* https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg */
 
 @font-face {
     font-family: "Homemade Sausage";
@@ -84,4 +85,15 @@ h4 {
 
 h6 {
     font-weight: bolder;
+}
+
+a.countryIndex {
+    text-decoration: none;
+    color: black;
+}
+
+p.countryName {
+    font-weight: bolder;
+    margin: 0;
+    padding: 0;
 }
