@@ -1,15 +1,30 @@
+<style>
+    body {
+        background-image: url("https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg");
+        background-position: center;
+        background-repeat: repeat;
+        background-size: cover;
+    }
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <%- include("../partials/head.ejs")%>
 </head>
 <body>
-    <%- include("../partials/nav.ejs")%>
-    <h1>Log In</h1>
-    <form action="/member" method="POST">
-        Username: <input type="text" name="username" required><br>
-        Password: <input type="password" name="password" required><br>
-        <input type="submit" value="Log In">
-    </form>
+    <main>
+        <%- include("../partials/nav.ejs")%>
+        <div class="container center-align content">
+            <h3>Welcome Back</h3>
+            <div class="container center-align loginInputs">
+                <form action="/member" method="POST">
+                    Username: <input type="text" name="username" required><br>
+                    Password: <input type="password" name="password" required><br>
+                    <button class="btn waves-effect waves-light" type="submit">Log In</button>
+                </form>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
