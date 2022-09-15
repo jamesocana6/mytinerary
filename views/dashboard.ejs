@@ -1,3 +1,13 @@
+<style>
+    body {
+        background-image: url("https://images.pexels.com/photos/2253821/pexels-photo-2253821.jpeg");
+        background-position: center;
+        background-repeat: repeat;
+        background-size: cover;
+    }
+</style>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,26 +15,43 @@
 </head>
 <body>
     <%- include("./partials/nav.ejs")%>
-    <h1><%= currentUser.username %>'s Trips</h1>
-    
-    <a href="/trips/new">Add New Trip</a>
-    <div class="container center-align hoverable">
+    <div class="container center-align content">
+        <h3><%= currentUser.username %>'s Trips</h3>
+        <div class="left-align addTrip">
+            <a class="btn-floating btn-medium waves-effect waves-light blue lighten-2" href="/trips/new"><i class="material-icons">add</i></a> <br>
+            Add Trip
+        </div>
         <% for (let trip of tripsArr) { %>
-            <div class="container card-panel left-align">
-                <a href="/trips/<%=trip._id%>"><%= trip.name %></a> 
-                <%= trip.country %> 
-                <% if (trip.review) { %>
-                Food: <%= trip.review.rating.food %> 
-                Sights: <%= trip.review.rating.sights %> 
-                Worth: <%= trip.review.rating.worth %> 
-                Overall: <%= trip.review.rating.overall %> 
-                <% } %>
-                <br>
-                <a href="/trips/<%=trip._id%>/edit">Edit</a> <br>
-                <form action="/trips/<%=trip._id%>?_method=DELETE" method="POST">
-                    <button type="submit">X</button>
-                </form>
-            </div>
+            <a href="/trips/<%=trip._id%>">
+                <div class="card-panel left-align hoverable tripShow">
+                    <div class="row valign-wrapper">
+                        <div class="col s8">
+                            <%= trip.name %> <br>
+                            <%= trip.country %> &nbsp;  $<%= trip.totalCost %> &nbsp; 
+                            <%= trip.date %> <br> 
+                            <% if (trip.review) { %>
+                                Overall: 
+                                <% for (let i = 0; i < Math.floor(trip.review.rating.overall) ; i++ ) { %>
+                                    <i class="tiny material-icons">star</i>
+                                <% } %>
+                                <% if ((Math.ceil(trip.review.rating.overall) - Math.floor(trip.review.rating.overall)) === 1) { %>
+                                    <i class="tiny material-icons">star_half</i>
+                                <% } %>
+                                <% for (let i = 0; i < (5-Math.ceil(trip.review.rating.overall)); i++ ) { %>
+                                    <i class="tiny material-icons">star_border</i>
+                                <% } %>
+                                <br>                                
+                                <%= trip.review.rating.comment %>  
+                            <% } %>
+                        </div>
+                        <div  class="col s4 right-align deleteBtn">
+                            <form action="/trips/<%=trip._id%>?_method=DELETE" method="POST">
+                                <button class="btn-small waves-effect waves-light red lighten-2 hoverable" type="submit" name="action" >DELETE</button>                    
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </a> 
         <% } %>
     </div>
 </body>

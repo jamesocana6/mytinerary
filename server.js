@@ -35,6 +35,10 @@ app.get("/", (req, res) => {
     res.redirect("/home");
 });
 
+app.get("/aboutme", (req, res) => {
+    res.render("aboutMe.ejs");
+})
+
 //database connection error / success
 const db = mongoose.connection;
 db.on("error", (err) => console.log(err.message + "we got an error connecting the DB"));

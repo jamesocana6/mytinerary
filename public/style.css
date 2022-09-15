@@ -4,8 +4,9 @@
 /* https://images.pexels.com/photos/1010657/pexels-photo-1010657.jpeg */
 /* https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg */
 /* https://images.pexels.com/photos/2253821/pexels-photo-2253821.jpeg */
-/* https://images.pexels.com/photos/333525/pexels-photo-333525.jpeg */
 /* LOG OUT */
+/* https://images.pexels.com/photos/333525/pexels-photo-333525.jpeg */
+/* LOG IN */
 /* https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg */
 
 @font-face {
@@ -111,4 +112,20 @@ footer.footer {
 .loginInputs {
     max-width: 25%;
     text-align: center;
+}
+
+.addTrip {
+    margin: 0 15px;
+}
+
+.addTrip > a {
+    margin: 0 8px;
+}
+
+.row {
+    margin: 0;
+}
+
+.tripShow {
+    color: black;
 }
