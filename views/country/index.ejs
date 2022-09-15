@@ -17,14 +17,52 @@
                             <%=country.name%>
                         </a>
                         <% if (country.reviews.length> 0) { %>
-                            Food: <i class="materials-icon">star</i>
-                            <% for (let i = 0; i < ratLow(countryAvgRating(country)).length ; i++ ) { %>
-                                <i class="star"></i>
+                            <div class="container">
+                                Overall: 
+                                <% for (let i = 0; i < ratLow(countryAvgRating(country))[3] ; i++ ) { %>
+                                    <i class="tiny material-icons">star</i>
+                                <% } %>
+                                <% if ((ratHigh(countryAvgRating(country))[3] - ratLow(countryAvgRating(country))[3]) === 1) { %>
+                                    <i class="tiny material-icons">star_half</i>
+                                <% } %>
+                                <% for (let i = 0; i < (5-ratHigh(countryAvgRating(country))[3]); i++ ) { %>
+                                    <i class="tiny material-icons">star_border</i>
+                                <% } %>
+                            </div>
+
+                            Food:
+                            <% for (let i = 0; i < ratLow(countryAvgRating(country))[0] ; i++ ) { %>
+                                <i class="tiny material-icons">star</i>
                             <% } %>
-                                Food: <%= countryAvgRating(country)[0] %>
-                                Sights: <%= countryAvgRating(country)[1] %>
-                                Worth: <%= countryAvgRating(country)[2] %>
-                                Overall: <%= countryAvgRating(country)[3] %>
+                            <% if ((ratHigh(countryAvgRating(country))[0] - ratLow(countryAvgRating(country))[0]) === 1) { %>
+                                <i class="tiny material-icons">star_half</i>
+                            <% } %>
+                            <% for (let i = 0; i < (5-ratHigh(countryAvgRating(country))[0]); i++ ) { %>
+                                <i class="tiny material-icons">star_border</i>
+                            <% } %>
+
+                            Sights: 
+                            <% for (let i = 0; i < ratLow(countryAvgRating(country))[1] ; i++ ) { %>
+                                <i class="tiny material-icons">star</i>
+                            <% } %>
+                            <% if ((ratHigh(countryAvgRating(country))[1] - ratLow(countryAvgRating(country))[1]) === 1) { %>
+                                <i class="tiny material-icons">star_half</i>
+                            <% } %>
+                            <% for (let i = 0; i < (5-ratHigh(countryAvgRating(country))[1]); i++ ) { %>
+                                <i class="tiny material-icons">star_border</i>
+                            <% } %>
+
+                            Worth: 
+                            <% for (let i = 0; i < ratLow(countryAvgRating(country))[2] ; i++ ) { %>
+                                <i class="tiny material-icons">star</i>
+                            <% } %>
+                            <% if ((ratHigh(countryAvgRating(country))[2] - ratLow(countryAvgRating(country))[2]) === 1) { %>
+                                <i class="tiny material-icons">star_half</i>
+                            <% } %>
+                            <% for (let i = 0; i < (5-ratHigh(countryAvgRating(country))[2]); i++ ) { %>
+                                <i class="tiny material-icons">star_border</i>
+                            <% } %>
+
                         <% } else { %>
                                 No ratings yet!
                         <% } %>

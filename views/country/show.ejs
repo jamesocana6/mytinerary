@@ -10,6 +10,18 @@
         <div class="container">
             Number of Visits: <%=numVisits%> <br>
             <% if (country.reviews.length > 0) { %>
+                Overall: 
+                <% for (let i = 0; i < ratLow[3] ; i++ ) { %>
+                    <i class="material-icons">star</i>
+                <% } %>
+                <% if ((ratHigh[3] - ratLow[3]) === 1) { %>
+                    <i class="material-icons">star_half</i>
+                <% } %>
+                <% for (let i = 0; i < (5-ratHigh[3]); i++ ) { %>
+                    <i class="material-icons">star_border</i>
+                <% } %>
+                <br>
+                
                 Food: 
                 <% for (let i = 0; i < ratLow[0] ; i++ ) { %>
                     <i class="material-icons">star</i>
@@ -46,17 +58,6 @@
                 <% } %>
                 <br>
 
-                Overall: 
-                <% for (let i = 0; i < ratLow[3] ; i++ ) { %>
-                    <i class="material-icons">star</i>
-                <% } %>
-                <% if ((ratHigh[3] - ratLow[3]) === 1) { %>
-                    <i class="material-icons">star_half</i>
-                <% } %>
-                <% for (let i = 0; i < (5-ratHigh[3]); i++ ) { %>
-                    <i class="material-icons">star_border</i>
-                <% } %>
-                <br>
             <% } %>
         </div>
         <% for (let review of reviews) { %>
