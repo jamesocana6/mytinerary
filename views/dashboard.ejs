@@ -15,6 +15,7 @@
 </head>
 <body>
     <%- include("./partials/nav.ejs")%>
+    <main>
     <div class="container center-align content">
         <h3><%= currentUser.username %>'s Trips</h3>
         <div class="left-align addTrip">
@@ -54,5 +55,7 @@
             </a> 
         <% } %>
     </div>
+</main>
+<%- include("./partials/footer.ejs")%>
 </body>
 </html>
