@@ -8,8 +8,9 @@
     <div class="container left-align content">
         <h3><%=country.name%></h3>
         <div class="container">
-            Number of Visits: <%=numVisits%> <br>
+            <h5>Number of Visits: <%=numVisits%></h5> <br>
             <% if (country.reviews.length > 0) { %>
+                <div class="container">
                 Overall: 
                 <% for (let i = 0; i < ratLow[3] ; i++ ) { %>
                     <i class="material-icons">star</i>
@@ -21,7 +22,7 @@
                     <i class="material-icons">star_border</i>
                 <% } %>
                 <br>
-                
+
                 Food: 
                 <% for (let i = 0; i < ratLow[0] ; i++ ) { %>
                     <i class="material-icons">star</i>
@@ -57,16 +58,65 @@
                     <i class="material-icons">star_border</i>
                 <% } %>
                 <br>
-
+                </div>
             <% } %>
         </div>
         <% for (let review of reviews) { %>
             <div class="card-panel">
                 <% if (review.anonymous) { %>
-                    Anonymous
+                    <h6>Anonymous</h6> 
                 <% } else { %>
-                    <%= review.username %>
+                    <h6><%= review.username %></h6>
                 <% } %>
+                &nbsp;
+
+                Overall: 
+                <% for (let i = 0; i < Math.floor(review.rating.overall) ; i++ ) { %>
+                    <i class="tiny material-icons">star</i>
+                <% } %>
+                <% if ((Math.ceil(review.rating.overall) - Math.floor(review.rating.overall)) === 1) { %>
+                    <i class="tiny material-icons">star_half</i>
+                <% } %>
+                <% for (let i = 0; i < (5-Math.ceil(review.rating.overall)); i++ ) { %>
+                    <i class="tiny material-icons">star_border</i>
+                <% } %>
+                &nbsp;
+
+                Food: 
+                <% for (let i = 0; i < Math.floor(review.rating.food) ; i++ ) { %>
+                    <i class="tiny material-icons">star</i>
+                <% } %>
+                <% if ((Math.ceil(review.rating.food) - Math.floor(review.rating.food)) === 1) { %>
+                    <i class="tiny material-icons">star_half</i>
+                <% } %>
+                <% for (let i = 0; i < (5-Math.ceil(review.rating.food)); i++ ) { %>
+                    <i class="tiny material-icons">star_border</i>
+                <% } %>
+                &nbsp;
+
+                Sights: 
+                <% for (let i = 0; i < Math.floor(review.rating.sights) ; i++ ) { %>
+                    <i class="tiny material-icons">star</i>
+                <% } %>
+                <% if ((Math.ceil(review.rating.sights) - Math.floor(review.rating.sights)) === 1) { %>
+                    <i class="tiny material-icons">star_half</i>
+                <% } %>
+                <% for (let i = 0; i < (5-Math.ceil(review.rating.sights)); i++ ) { %>
+                    <i class="tiny material-icons">star_border</i>
+                <% } %>
+                &nbsp;
+
+                Worth: 
+                <% for (let i = 0; i < Math.floor(review.rating.worth) ; i++ ) { %>
+                    <i class="tiny material-icons">star</i>
+                <% } %>
+                <% if ((Math.ceil(review.rating.worth) - Math.floor(review.rating.worth)) === 1) { %>
+                    <i class="tiny material-icons">star_half</i>
+                <% } %>
+                <% for (let i = 0; i < (5-Math.ceil(review.rating.worth)); i++ ) { %>
+                    <i class="tiny material-icons">star_border</i>
+                <% } %>
+                <br>
                 <%= review.comment %>
             </div>
         <% } %>

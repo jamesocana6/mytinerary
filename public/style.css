@@ -81,3 +81,7 @@ h4 {
     font-family: "Homemade Sausage";
     font-size: 50px;
 }
+
+h6 {
+    font-weight: bolder;
+}
