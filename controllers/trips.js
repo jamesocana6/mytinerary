@@ -9,11 +9,6 @@ const countryNames = require("../models/countrySeed.js");
 //I
 tripRouter.get("/", (req, res) => {
     if (req.session.currentUser) {
-        // User.findById(req.session.currentUser._id, (err, foundUser) => {
-        //     res.render("./dashboard.ejs", { 
-        //         currentUser: foundUser
-        //     });
-        // });
         User.findById(req.session.currentUser._id).populate("trips.review").exec(function (err, user) {
             res.render("./dashboard.ejs", {
                 currentUser: user,
