@@ -48,7 +48,7 @@ Your trip page:
 * A sort, search, and filter function for the countries and trips
 
 ## <a name="deployment"></a>Deployed Link
-* https://jamesocana6.github.io/mytinerary/
+* https://floating-plateau-88049.herokuapp.com/home
 
 * You can view the repository:
 * https://github.com/jamesocana6/mytinerary
